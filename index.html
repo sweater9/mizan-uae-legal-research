@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Primary-source-first UAE legal research.">
+  <title>Mizan | UAE Legal Research</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Mizan home">
+      <span class="mark" aria-hidden="true">م</span>
+      <span><b>Mizan</b><small>UAE legal research</small></span>
+    </a>
+    <span class="status">● Official sources · updated 25 Jul 2026</span>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">UAE legislation, made navigable</p>
+      <h1>Find the rule.<br><em>Understand the impact.</em></h1>
+      <p class="lede">Search a curated starter collection of UAE federal and financial free-zone legislation. Every result separates jurisdiction, status and primary source.</p>
+
+      <form id="search-form" class="search">
+        <label for="query">Legal topic or question</label>
+        <div class="search-row">
+          <input id="query" placeholder="e.g. beneficial owner, data protection, labour termination…" autocomplete="off">
+          <button type="submit">Research →</button>
+        </div>
+      </form>
+
+      <div class="examples">
+        <span>Try</span>
+        <button data-query="beneficial owner">Beneficial owner</button>
+        <button data-query="data protection">Data protection</button>
+        <button data-query="corporate tax">Corporate tax</button>
+        <button data-query="labour termination">Labour termination</button>
+        <button data-query="DFSA AML">DFSA AML</button>
+        <button data-query="FSRA conduct of business">FSRA conduct</button>
+      </div>
+    </section>
+
+    <section id="intro" class="principles">
+      <article><span>01</span><h2>Primary sources first</h2><p>Official legislation and regulator databases lead every result.</p></article>
+      <article><span>02</span><h2>Jurisdiction made clear</h2><p>Federal law stays distinct from DIFC and ADGM frameworks.</p></article>
+      <article><span>03</span><h2>Status, not guesswork</h2><p>Superseded instruments are flagged and replacements identified.</p></article>
+    </section>
+
+    <section id="results" class="results" hidden>
+      <div class="results-head">
+        <div><p class="eyebrow">Research brief</p><h2 id="results-title"></h2><p id="results-count"></p></div>
+        <div class="controls">
+          <label for="jurisdiction">Jurisdiction</label>
+          <select id="jurisdiction">
+            <option>All</option>
+            <option>Federal</option>
+            <option>DIFC</option>
+            <option>ADGM</option>
+          </select>
+          <button id="copy" type="button">Copy brief</button>
+        </div>
+      </div>
+      <div id="result-list"></div>
+      <aside class="notice"><b>Currency note</b> Legislation changes. Confirm the current consolidated text using each official link before relying on a result.</aside>
+    </section>
+  </main>
+
+  <footer>
+    <div><b>Mizan</b><p>Informational legal research assistance, not legal advice. Consult a licensed UAE legal professional for formal matters.</p></div>
+    <a href="https://uaelegislation.gov.ae/en/legislations" target="_blank" rel="noreferrer">UAE Legislation ↗</a>
+  </footer>
+  <script src="app.js"></script>
+</body>
+</html>
