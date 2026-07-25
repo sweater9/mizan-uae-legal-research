@@ -2,6 +2,9 @@
 
 A zero-build, GitHub Pages-ready edition of Mizan.
 
+The starter index includes federal UAE legislation, DIFC/DFSA materials and
+ADGM/FSRA materials. Regulatory sources were last reviewed on 25 July 2026.
+
 ## Publish with GitHub Pages
 
 1. Create a public GitHub repository.
