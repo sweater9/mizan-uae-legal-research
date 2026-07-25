@@ -5,6 +5,11 @@ A zero-build, GitHub Pages-ready edition of Mizan.
 The starter index includes federal UAE legislation, DIFC/DFSA materials and
 ADGM/FSRA materials. Regulatory sources were last reviewed on 25 July 2026.
 
+Searching `beneficial owner` returns the cross-regulatory framework, including
+federal corporate-transparency and AML legislation, CBUAE guidance, DFSA and
+FSRA customer-due-diligence rules, ADGM ownership regulations, and the UAE
+Capital Market Authority layer.
+
 ## Publish with GitHub Pages
 
 1. Create a public GitHub repository.
