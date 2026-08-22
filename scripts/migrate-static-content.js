@@ -70,12 +70,20 @@ function splitTerms(value = '') {
 function buildTopicTags(item) {
   const raw = `${item.title || ''} ${item.topics || ''}`.toLowerCase().replace(/[^a-z0-9\s-]/g, ' ');
   const tags = new Set();
+  const phraseTokens = new Set();
+
   for (const [phrase, tag] of phraseTags) {
-    if (raw.includes(phrase)) tags.add(tag);
+    if (raw.includes(phrase)) {
+      tags.add(tag);
+      for (const token of phrase.replace(/-/g, ' ').split(/\s+/)) {
+        if (token.length >= 3 && !stopWords.has(token)) phraseTokens.add(token);
+      }
+    }
   }
+
   for (const token of raw.split(/\s+/)) {
     const clean = token.replace(/^-+|-+$/g, '');
-    if (clean.length < 3 || stopWords.has(clean) || /^\d+$/.test(clean)) continue;
+    if (clean.length < 3 || stopWords.has(clean) || /^\d+$/.test(clean) || phraseTokens.has(clean)) continue;
     tags.add(clean);
   }
   return [...tags];
