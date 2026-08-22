@@ -57,6 +57,17 @@ function intentTerms(rawQuery) {
   });
   return [...out];
 }
+function directIntentBoost(record, query) {
+  const intents = intentTerms(query);
+  if (!intents.length) return 0;
+  const heading = normalise(`${record.number} ${record.title_en} ${(record.topic_tags || []).join(' ')} ${(record.search_terms || []).join(' ')}`);
+  return intents.reduce((score, term) => {
+    if (heading.includes(term)) return score + 600;
+    const words = term.split(' ').filter(Boolean);
+    const matched = words.filter(word => heading.includes(word)).length;
+    return score + matched * 80;
+  }, 0);
+}
 function search(query) {
   const rank = new Map();
   const addHits = (term, base) => {
@@ -68,7 +79,10 @@ function search(query) {
   if (full) addHits(full, intents.length ? 80 : 160);
   intents.forEach((term, i) => addHits(term, 420 - i * 25));
   [...new Set(expandTerms(query))].forEach((term, i) => addHits(term, (intents.length ? 25 : 90) - Math.min(i * 2, intents.length ? 15 : 60)));
-  return [...rank.entries()].sort((a, b) => b[1] - a[1]).map(([id]) => records[id]);
+  return [...rank.entries()]
+    .map(([id, flex]) => ({ record: records[id], intent: directIntentBoost(records[id], query), flex }))
+    .sort((a, b) => (b.intent - a.intent) || (b.flex - a.flex))
+    .map(x => x.record);
 }
 
 const cases = [
