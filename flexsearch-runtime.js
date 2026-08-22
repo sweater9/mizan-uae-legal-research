@@ -37,6 +37,18 @@
     return [...out];
   }
 
+  function directIntentBoost(law, rawQuery) {
+    const intents = intentTerms(rawQuery);
+    if (!intents.length) return 0;
+    const heading = normalise(`${law.number} ${law.title} ${law.topics}`);
+    return intents.reduce((score, term) => {
+      if (heading.includes(term)) return score + 600;
+      const words = term.split(" ").filter(Boolean);
+      const matched = words.filter(word => heading.includes(word)).length;
+      return score + matched * 80;
+    }, 0);
+  }
+
   function flexIds(rawQuery) {
     const rank = new Map();
     const addHits = (term, base) => {
@@ -60,9 +72,9 @@
       const rank = flexIds(q);
       if (!rank.size) return fallbackSearch(options);
       current = [...rank.keys()]
-        .map(id => ({ l: laws[id], flex: rank.get(id), legacy: scoreLaw(laws[id], q) }))
+        .map(id => ({ l: laws[id], intent: directIntentBoost(laws[id], q), flex: rank.get(id), legacy: scoreLaw(laws[id], q) }))
         .filter(x => x.l && (filter.value === "All" || x.l.jurisdiction === filter.value))
-        .sort((a, b) => (b.flex - a.flex) || (b.legacy - a.legacy) || a.l.authority.localeCompare(b.l.authority))
+        .sort((a, b) => (b.intent - a.intent) || (b.flex - a.flex) || (b.legacy - a.legacy) || a.l.authority.localeCompare(b.l.authority))
         .map(x => x.l);
       if (!current.length) return fallbackSearch(options);
       render(q, options.scroll);
