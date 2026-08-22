@@ -63,10 +63,11 @@ function search(query) {
     const hits = index.search(term, { limit: 100, suggest: true }) || [];
     hits.forEach((id, hitIndex) => rank.set(id, (rank.get(id) || 0) + Math.max(1, base - hitIndex)));
   };
+  const intents = intentTerms(query);
   const full = normalise(query);
-  if (full) addHits(full, 160);
-  intentTerms(query).forEach((term, i) => addHits(term, 320 - i * 20));
-  [...new Set(expandTerms(query))].forEach((term, i) => addHits(term, 90 - Math.min(i * 3, 60)));
+  if (full) addHits(full, intents.length ? 80 : 160);
+  intents.forEach((term, i) => addHits(term, 420 - i * 25));
+  [...new Set(expandTerms(query))].forEach((term, i) => addHits(term, (intents.length ? 25 : 90) - Math.min(i * 2, intents.length ? 15 : 60)));
   return [...rank.entries()].sort((a, b) => b[1] - a[1]).map(([id]) => records[id]);
 }
 
