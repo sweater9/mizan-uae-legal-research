@@ -8,20 +8,7 @@ if (!fs.existsSync(dataPath)) throw new Error('Missing data/index.json. Run npm 
 
 const records = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
 const index = new FlexSearch.Index({ tokenize: 'forward', cache: true });
-
-records.forEach((record, id) => {
-  index.add(id, [
-    record.number,
-    record.title_en,
-    ...(record.topic_tags || []),
-    ...(record.search_terms || []),
-    record.regulator,
-    record.jurisdiction,
-    record.plain_summary_en,
-    record.relevance_en,
-    record.note_en
-  ].filter(Boolean).join(' '));
-});
+records.forEach((record, id) => index.add(id, [record.number, record.title_en, ...(record.topic_tags || []), ...(record.search_terms || []), record.regulator, record.jurisdiction, record.plain_summary_en, record.relevance_en, record.note_en].filter(Boolean).join(' ')));
 
 const synonymGroups = [
   ['ubo','beneficial owner','beneficial ownership','ultimate beneficial owner','ownership control'],
@@ -32,7 +19,6 @@ const synonymGroups = [
   ['labour','labor','employment','employee'],
   ['termination','dismissal','end of service'],
   ['corporate tax','business tax','taxation'],
-  ['central bank','cbuae','banking regulator'],
   ['dfsa','dubai financial services authority','difc regulator'],
   ['fsra','financial services regulatory authority','adgm regulator'],
   ['sanction','sanctions','targeted financial sanctions','tfs'],
@@ -45,31 +31,22 @@ const intentRules = [
   { any: ['gratuity','end of service','end-of-service','severance'], add: ['end of service','gratuity','employment','labour'] },
   { any: ['notice period','notice before termination','termination notice','dismissal notice'], add: ['notice','termination','employment','labour'] },
   { any: ['competitor','non compete','non-compete','restraint of trade'], add: ['non compete','employment','labour','termination'] },
-  { any: ['data leak','data breach','personal data leaked','breach notification'], add: ['data protection','personal data','breach','privacy'] },
   { all: ['free zone','tax'], add: ['corporate tax','free zone','qualifying income','qualifying free zone person'] },
   { any: ['crypto licence','crypto license','virtual asset licence','virtual asset license','vara licence','vara license'], add: ['vara','virtual assets','licensing','crypto'] },
+  { any: ['data leak','data breach','personal data leaked','breach notification'], add: ['data protection','personal data','breach','privacy'] },
   { any: ['beneficial owner','ultimate owner','who owns the company','ubo'], add: ['beneficial owner','ubo','ultimate ownership','real beneficiary'] }
 ];
 
-function normalise(value) {
-  return String(value || '').toLowerCase().replace(/[^\p{L}\p{N}%]+/gu, ' ').trim();
-}
-
+function normalise(value) { return String(value || '').toLowerCase().replace(/[^\p{L}\p{N}%]+/gu, ' ').trim(); }
 function expandTerms(value) {
   const clean = normalise(value);
   const stopwords = new Set(['a','an','and','are','for','from','in','is','of','on','or','the','to','with']);
   const expanded = new Set([clean, ...clean.split(' ').filter(Boolean)]);
   synonymGroups.forEach(group => {
-    if (group.some(term => clean.includes(normalise(term)))) {
-      group.forEach(term => {
-        expanded.add(normalise(term));
-        normalise(term).split(' ').forEach(word => expanded.add(word));
-      });
-    }
+    if (group.some(term => clean.includes(normalise(term)))) group.forEach(term => { expanded.add(normalise(term)); normalise(term).split(' ').forEach(word => expanded.add(word)); });
   });
   return [...expanded].filter(term => term.length > 1 && !stopwords.has(term));
 }
-
 function intentTerms(rawQuery) {
   const clean = normalise(rawQuery);
   const out = new Set();
@@ -80,20 +57,14 @@ function intentTerms(rawQuery) {
   });
   return [...out];
 }
-
 function search(query) {
-  const terms = [...new Set([normalise(query), ...expandTerms(query), ...intentTerms(query)])].filter(Boolean);
+  const terms = [...new Set([normalise(query), ...intentTerms(query), ...expandTerms(query)])].filter(Boolean);
   const rank = new Map();
   terms.forEach((term, queryIndex) => {
     const hits = index.search(term, { limit: 100, suggest: true }) || [];
-    hits.forEach((id, hitIndex) => {
-      const boost = Math.max(1, 120 - queryIndex * 4 - hitIndex);
-      rank.set(id, (rank.get(id) || 0) + boost);
-    });
+    hits.forEach((id, hitIndex) => rank.set(id, (rank.get(id) || 0) + Math.max(1, 140 - queryIndex * 5 - hitIndex)));
   });
-  return [...rank.entries()]
-    .sort((a, b) => b[1] - a[1])
-    .map(([id]) => records[id]);
+  return [...rank.entries()].sort((a, b) => b[1] - a[1]).map(([id]) => records[id]);
 }
 
 const cases = [
@@ -114,15 +85,10 @@ const cases = [
 
 let failures = 0;
 for (const [query, predicate] of cases) {
-  const results = search(query);
-  const topFive = results.slice(0, 5);
+  const topFive = search(query).slice(0, 5);
   const matched = topFive.some(predicate);
   console.log(`${matched ? 'PASS' : 'FAIL'} ${query}: ${topFive.map(r => r.title_en).join(' | ')}`);
   if (!matched) failures += 1;
 }
-
-if (failures) {
-  console.error(`${failures} representative FlexSearch query check(s) failed.`);
-  process.exit(1);
-}
+if (failures) { console.error(`${failures} representative FlexSearch query check(s) failed.`); process.exit(1); }
 console.log(`All ${cases.length} representative FlexSearch query checks passed.`);
