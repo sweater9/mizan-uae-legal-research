@@ -3,12 +3,14 @@ name: Validate static regulatory data
 on:
   push:
     branches:
-      - 'agent/static-data-phase0'
+      - 'agent/phase1-flexsearch'
     paths:
       - 'app.js'
       - 'content-2026.js'
       - 'content-details.js'
       - 'content-upgrade-aug2026.js'
+      - 'flexsearch-runtime.js'
+      - 'index.html'
       - 'data/**'
       - 'scripts/**'
       - 'package.json'
@@ -20,6 +22,8 @@ on:
       - 'content-2026.js'
       - 'content-details.js'
       - 'content-upgrade-aug2026.js'
+      - 'flexsearch-runtime.js'
+      - 'index.html'
       - 'data/**'
       - 'scripts/**'
       - 'package.json'
@@ -47,6 +51,9 @@ jobs:
 
       - name: Migrate and validate data
         run: npm run check:data
+
+      - name: Test representative FlexSearch queries
+        run: npm run test:search
 
       - name: Build FlexSearch indexes
         run: npm run build:index
