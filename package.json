@@ -1,0 +1,12 @@
+{
+  "name": "mizan-uae-regulatory-intelligence",
+  "private": true,
+  "scripts": {
+    "migrate:data": "node scripts/migrate-static-content.js",
+    "build:index": "node scripts/build-index.js",
+    "build:data": "npm run migrate:data && npm run build:index"
+  },
+  "dependencies": {
+    "flexsearch": "^0.8.212"
+  }
+}
