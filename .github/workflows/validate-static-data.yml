@@ -12,6 +12,7 @@ on:
       - 'data/**'
       - 'scripts/**'
       - 'package.json'
+      - 'package-lock.json'
       - '.github/workflows/validate-static-data.yml'
   pull_request:
     paths:
@@ -22,10 +23,11 @@ on:
       - 'data/**'
       - 'scripts/**'
       - 'package.json'
+      - 'package-lock.json'
       - '.github/workflows/validate-static-data.yml'
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   validate:
@@ -33,15 +35,29 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: npm
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install dependencies and generate lockfile
+        run: npm install --ignore-scripts
+
+      - name: Commit generated package-lock.json on preview branch
+        if: github.event_name == 'push' && github.ref == 'refs/heads/agent/static-data-phase0'
+        run: |
+          if git diff --quiet -- package-lock.json && git ls-files --error-unmatch package-lock.json >/dev/null 2>&1; then
+            echo "package-lock.json already committed and unchanged"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add package-lock.json
+            git commit -m "chore: add npm package lock"
+            git push origin HEAD:agent/static-data-phase0
+          fi
 
       - name: Migrate and validate data
         run: npm run check:data
