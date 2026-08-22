@@ -33,7 +33,7 @@ const intentRules = [
   { any: ['competitor','non compete','non-compete','restraint of trade'], add: ['non compete','employment','labour','termination'] },
   { all: ['free zone','tax'], add: ['corporate tax','free zone','qualifying income','qualifying free zone person'] },
   { any: ['crypto licence','crypto license','virtual asset licence','virtual asset license','vara licence','vara license'], add: ['vara','virtual assets','licensing','crypto'] },
-  { any: ['data leak','data breach','personal data leaked','breach notification'], add: ['data protection','personal data','breach','privacy'] },
+  { any: ['data leak','data breach','personal data leaked','breach notification'], add: ['data protection','personal data','privacy','breach'] },
   { any: ['beneficial owner','ultimate owner','who owns the company','ubo'], add: ['beneficial owner','ubo','ultimate ownership','real beneficiary'] }
 ];
 
@@ -58,12 +58,15 @@ function intentTerms(rawQuery) {
   return [...out];
 }
 function search(query) {
-  const terms = [...new Set([normalise(query), ...intentTerms(query), ...expandTerms(query)])].filter(Boolean);
   const rank = new Map();
-  terms.forEach((term, queryIndex) => {
+  const addHits = (term, base) => {
     const hits = index.search(term, { limit: 100, suggest: true }) || [];
-    hits.forEach((id, hitIndex) => rank.set(id, (rank.get(id) || 0) + Math.max(1, 140 - queryIndex * 5 - hitIndex)));
-  });
+    hits.forEach((id, hitIndex) => rank.set(id, (rank.get(id) || 0) + Math.max(1, base - hitIndex)));
+  };
+  const full = normalise(query);
+  if (full) addHits(full, 160);
+  intentTerms(query).forEach((term, i) => addHits(term, 320 - i * 20));
+  [...new Set(expandTerms(query))].forEach((term, i) => addHits(term, 90 - Math.min(i * 3, 60)));
   return [...rank.entries()].sort((a, b) => b[1] - a[1]).map(([id]) => records[id]);
 }
 
