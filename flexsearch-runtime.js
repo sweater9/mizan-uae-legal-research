@@ -5,10 +5,7 @@
 
   const fallbackSearch = search;
   const index = new window.FlexSearch.Index({ tokenize: "forward", cache: true });
-
-  laws.forEach((law, id) => {
-    index.add(id, [law.number, law.title, law.topics, law.authority, law.jurisdiction, law.summary, law.relevance, law.note || ""].join(" "));
-  });
+  laws.forEach((law, id) => index.add(id, [law.number, law.title, law.topics, law.authority, law.jurisdiction, law.summary, law.relevance, law.note || ""].join(" ")));
 
   const intentRules = [
     { any: ["extra hours", "work late", "working late", "after hours", "overtime"], add: ["overtime", "working hours", "labour", "employment"] },
@@ -23,7 +20,7 @@
     { all: ["free zone", "tax"], add: ["corporate tax", "free zone", "qualifying income", "qualifying free zone person"] },
     { any: ["free-zone company", "free zone company"], add: ["corporate tax", "free zone", "qualifying income"] },
     { any: ["crypto licence", "crypto license", "virtual asset licence", "virtual asset license", "vara licence", "vara license"], add: ["vara", "virtual assets", "licensing", "crypto"] },
-    { any: ["data leak", "data breach", "personal data leaked", "breach notification"], add: ["data protection", "personal data", "breach", "privacy"] },
+    { any: ["data leak", "data breach", "personal data leaked", "breach notification"], add: ["data protection", "personal data", "privacy", "breach"] },
     { any: ["beneficial owner", "ultimate owner", "who owns the company", "ubo"], add: ["beneficial owner", "ubo", "ultimate ownership", "real beneficiary"] },
     { any: ["money laundering", "aml", "customer due diligence", "cdd", "kyc"], add: ["aml", "anti money laundering", "customer due diligence", "kyc"] },
     { any: ["sanctions", "asset freeze", "terrorist list", "tfs"], add: ["sanctions", "targeted financial sanctions", "asset freeze", "aml"] }
@@ -41,36 +38,31 @@
   }
 
   function flexIds(rawQuery) {
-    const intents = intentTerms(rawQuery);
-    const expanded = expandTerms(rawQuery);
-    const queries = [...new Set([normalise(rawQuery), ...intents, ...expanded])].filter(Boolean);
     const rank = new Map();
-
-    queries.forEach((term, queryIndex) => {
+    const addHits = (term, base) => {
       let hits = [];
       try { hits = index.search(term, { limit: 100, suggest: true }) || []; } catch (error) { hits = []; }
-      hits.forEach((id, hitIndex) => {
-        const boost = Math.max(1, 140 - queryIndex * 5 - hitIndex);
-        rank.set(id, (rank.get(id) || 0) + boost);
-      });
-    });
+      hits.forEach((id, hitIndex) => rank.set(id, (rank.get(id) || 0) + Math.max(1, base - hitIndex)));
+    };
+
+    const full = normalise(rawQuery);
+    if (full) addHits(full, 160);
+    intentTerms(rawQuery).forEach((term, i) => addHits(term, 320 - i * 20));
+    [...new Set(expandTerms(rawQuery))].forEach((term, i) => addHits(term, 90 - Math.min(i * 3, 60)));
     return rank;
   }
 
   search = function flexSearch(options = { scroll: true }) {
     const q = query.value.trim();
     if (!q) return;
-
     try {
       const rank = flexIds(q);
       if (!rank.size) return fallbackSearch(options);
-
       current = [...rank.keys()]
         .map(id => ({ l: laws[id], flex: rank.get(id), legacy: scoreLaw(laws[id], q) }))
         .filter(x => x.l && (filter.value === "All" || x.l.jurisdiction === filter.value))
         .sort((a, b) => (b.flex - a.flex) || (b.legacy - a.legacy) || a.l.authority.localeCompare(b.l.authority))
         .map(x => x.l);
-
       if (!current.length) return fallbackSearch(options);
       render(q, options.scroll);
     } catch (error) {
