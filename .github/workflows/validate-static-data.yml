@@ -1,0 +1,59 @@
+name: Validate static regulatory data
+
+on:
+  push:
+    branches:
+      - 'agent/static-data-phase0'
+    paths:
+      - 'app.js'
+      - 'content-2026.js'
+      - 'content-details.js'
+      - 'content-upgrade-aug2026.js'
+      - 'data/**'
+      - 'scripts/**'
+      - 'package.json'
+      - '.github/workflows/validate-static-data.yml'
+  pull_request:
+    paths:
+      - 'app.js'
+      - 'content-2026.js'
+      - 'content-details.js'
+      - 'content-upgrade-aug2026.js'
+      - 'data/**'
+      - 'scripts/**'
+      - 'package.json'
+      - '.github/workflows/validate-static-data.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Migrate and validate data
+        run: npm run check:data
+
+      - name: Build FlexSearch indexes
+        run: npm run build:index
+
+      - name: Confirm generated artifacts
+        run: |
+          test -s data/index.json
+          test -s data/search-index-en.json
+          test -s data/search-index-ar.json
+          count=$(find data/legislation -type f -name '*.json' | wc -l)
+          test "$count" -gt 0
+          echo "Validated $count legislation files"
