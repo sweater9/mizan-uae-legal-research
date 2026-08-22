@@ -3,8 +3,10 @@
   "private": true,
   "scripts": {
     "migrate:data": "node scripts/migrate-static-content.js",
+    "validate:data": "node scripts/validate-data.js",
     "build:index": "node scripts/build-index.js",
-    "build:data": "npm run migrate:data && npm run build:index"
+    "build:data": "npm run migrate:data && npm run validate:data && npm run build:index",
+    "check:data": "npm run migrate:data && npm run validate:data"
   },
   "dependencies": {
     "flexsearch": "^0.8.212"
