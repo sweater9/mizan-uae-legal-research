@@ -57,6 +57,9 @@ jobs:
       - name: Test representative FlexSearch queries
         run: npm run test:search
 
+      - name: Test UX runtime isolation
+        run: npm run test:ux
+
       - name: Build FlexSearch indexes
         run: npm run build:index
 
