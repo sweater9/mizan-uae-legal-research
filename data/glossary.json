@@ -1,0 +1,14 @@
+[
+  {"term":"beneficial owner","aliases":["ubo","ultimate beneficial owner","real beneficiary"],"query":"beneficial owner"},
+  {"term":"data protection","aliases":["privacy","personal data","data breach"],"query":"data protection"},
+  {"term":"corporate tax","aliases":["business tax","free zone tax","qualifying free zone person"],"query":"corporate tax"},
+  {"term":"overtime","aliases":["extra hours","working hours","work late"],"query":"overtime"},
+  {"term":"probation","aliases":["trial period","probationary period"],"query":"probation"},
+  {"term":"gratuity","aliases":["end of service","end-of-service","severance"],"query":"gratuity"},
+  {"term":"non-compete","aliases":["non compete","competitor restriction","restraint of trade"],"query":"non-compete"},
+  {"term":"virtual assets","aliases":["crypto","vara","digital assets"],"query":"VARA"},
+  {"term":"anti-money laundering","aliases":["aml","cdd","kyc","customer due diligence"],"query":"AML"},
+  {"term":"sanctions","aliases":["targeted financial sanctions","tfs","asset freeze"],"query":"sanctions"},
+  {"term":"vat","aliases":["value added tax","vat registration","tax registration"],"query":"VAT"},
+  {"term":"employment termination","aliases":["dismissal","notice period","labour termination"],"query":"labour termination"}
+]
