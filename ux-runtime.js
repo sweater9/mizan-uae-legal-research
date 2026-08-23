@@ -7,6 +7,12 @@
     "beneficial owner", "data protection", "corporate tax", "overtime",
     "probation", "gratuity", "non-compete", "VARA licence"
   ];
+  const jurisdictionNotes = {
+    Federal: "Generally relevant across the UAE where federal law applies; check any statutory exclusions and free-zone-specific regimes.",
+    Dubai: "Dubai-specific framework. Check whether the activity is in mainland Dubai, another Dubai free zone, or DIFC before relying on it.",
+    DIFC: "Applies within the DIFC legal and regulatory framework rather than the general onshore UAE regime for matters within DIFC jurisdiction.",
+    ADGM: "Applies within the ADGM legal and regulatory framework rather than the general onshore UAE regime for matters within ADGM jurisdiction."
+  };
 
   function addBestMatch() {
     const firstMeta = document.querySelector("#result-list .card .meta");
@@ -36,6 +42,33 @@
     head.appendChild(context);
   }
 
+  function addJurisdictionCues() {
+    document.querySelectorAll("#result-list .card").forEach((card, index) => {
+      const law = current[index];
+      if (!law || card.querySelector(".scope-cue")) return;
+      const note = jurisdictionNotes[law.jurisdiction];
+      if (!note) return;
+      const body = card.querySelector(".card-body");
+      const why = body?.querySelector(".why");
+      if (!body || !why) return;
+      const cue = document.createElement("p");
+      cue.className = "scope-cue";
+      cue.innerHTML = `<b>Jurisdiction cue</b> · ${note}`;
+      body.insertBefore(cue, why);
+    });
+  }
+
+  function addLongResultGuidance() {
+    document.querySelector(".result-guidance")?.remove();
+    if (current.length < 8) return;
+    const list = document.querySelector("#result-list");
+    if (!list) return;
+    const guidance = document.createElement("div");
+    guidance.className = "result-guidance";
+    guidance.innerHTML = `<b>Review the first results first.</b> Mizan ranks the strongest matches at the top; later results may provide supporting, adjacent or jurisdiction-specific context.`;
+    list.prepend(guidance);
+  }
+
   function improveEmptyState() {
     if (current.length) return;
     const empty = document.querySelector("#result-list .empty");
@@ -55,6 +88,8 @@
     addBestMatch();
     improveCount();
     addSearchContext(q);
+    addJurisdictionCues();
+    addLongResultGuidance();
     improveEmptyState();
   };
 

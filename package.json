@@ -6,6 +6,7 @@
     "validate:data": "node scripts/validate-data.js",
     "build:index": "node scripts/build-index.js",
     "test:search": "node scripts/test-flexsearch.js",
+    "test:ux": "node scripts/test-ux-runtime.js",
     "build:data": "npm run migrate:data && npm run validate:data && npm run build:index",
     "check:data": "npm run migrate:data && npm run validate:data",
     "check:phase1": "npm run migrate:data && npm run validate:data && npm run test:search"
