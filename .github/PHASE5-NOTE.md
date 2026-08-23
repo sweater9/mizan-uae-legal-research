@@ -1,1 +1,0 @@
-Phase 5 preview adds shareable/restorable search state only. Search ranking and legal content remain unchanged.
