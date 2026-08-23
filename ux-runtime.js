@@ -17,7 +17,7 @@
     firstMeta.prepend(badge);
   }
 
-  function improveCount(q) {
+  function improveCount() {
     if (!current.length) return;
     const scope = filter.value === "All" ? "all jurisdictions" : filter.value;
     count.textContent = `${current.length} relevant instrument${current.length === 1 ? "" : "s"} · best matches first · ${scope}`;
@@ -30,7 +30,9 @@
     head.querySelector(".search-context")?.remove();
     const context = document.createElement("p");
     context.className = "search-context";
-    context.textContent = `Showing verified instruments relevant to “${q}”. Open the official source to confirm the latest consolidated text.`;
+    context.textContent = current.length
+      ? `Showing verified instruments relevant to “${q}”. Open the official source to confirm the latest consolidated text.`
+      : `No close verified match was found for “${q}”. Try a shorter topic or a related suggestion below.`;
     head.appendChild(context);
   }
 
@@ -51,7 +53,7 @@
   render = function enhancedRender(q, shouldScroll = true) {
     originalRender(q, shouldScroll);
     addBestMatch();
-    improveCount(q);
+    improveCount();
     addSearchContext(q);
     improveEmptyState();
   };
