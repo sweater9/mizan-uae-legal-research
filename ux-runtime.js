@@ -100,6 +100,13 @@
     if (next.href !== window.location.href) history.pushState({ q: query.value.trim(), jurisdiction: filter.value }, "", next);
   }
 
+  function showLandingState() {
+    current = [];
+    results.hidden = true;
+    intro.hidden = false;
+    copy.hidden = true;
+  }
+
   function restoreFromUrl() {
     const params = new URLSearchParams(window.location.search);
     const q = (params.get("q") || "").trim();
@@ -107,7 +114,10 @@
     const validJurisdiction = [...filter.options].some(option => option.value === jurisdiction || option.text === jurisdiction);
     query.value = q;
     filter.value = validJurisdiction ? jurisdiction : "All";
-    if (!q) return;
+    if (!q) {
+      showLandingState();
+      return;
+    }
     restoringHistory = true;
     try { originalSearch({ scroll: false }); } finally { restoringHistory = false; }
   }
