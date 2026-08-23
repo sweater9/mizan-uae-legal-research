@@ -20,7 +20,7 @@ const checks = [
   ['Shareable jurisdiction URL state exists', ux.includes('searchParams.set("jurisdiction", filter.value)')],
   ['Browser history restoration exists', ux.includes('window.addEventListener("popstate",restoreFromUrl)')],
   ['Copy search link action exists', ux.includes('Copy search link')],
-  ['250ms input debounce exists', ux.includes('},250)')],
+  ['250ms input debounce exists', ux.includes('),250);')],
   ['Jurisdiction clustering exists', ux.includes('clusterJurisdictions') && css.includes('.jurisdiction-group')],
   ['Superseded toggle exists', ux.includes('Include superseded') && flex.includes('mizanIncludeSuperseded')],
   ['Historical query exception exists', flex.includes('historyTerms') && flex.includes('wantsHistory')],
