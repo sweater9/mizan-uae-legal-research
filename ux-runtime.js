@@ -3,6 +3,8 @@
   if (typeof render !== "function") return;
 
   const originalRender = render;
+  const originalSearch = search;
+  let restoringHistory = false;
   const commonSuggestions = [
     "beneficial owner", "data protection", "corporate tax", "overtime",
     "probation", "gratuity", "non-compete", "VARA licence"
@@ -83,6 +85,63 @@
     }));
   }
 
+  function buildSearchUrl() {
+    const url = new URL(window.location.href);
+    const q = query.value.trim();
+    if (q) url.searchParams.set("q", q); else url.searchParams.delete("q");
+    if (filter.value && filter.value !== "All") url.searchParams.set("jurisdiction", filter.value);
+    else url.searchParams.delete("jurisdiction");
+    return url;
+  }
+
+  function syncUrl() {
+    if (restoringHistory) return;
+    const next = buildSearchUrl();
+    if (next.href !== window.location.href) history.pushState({ q: query.value.trim(), jurisdiction: filter.value }, "", next);
+  }
+
+  function showLandingState() {
+    current = [];
+    results.hidden = true;
+    intro.hidden = false;
+    copy.hidden = true;
+  }
+
+  function restoreFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const q = (params.get("q") || "").trim();
+    const jurisdiction = params.get("jurisdiction") || "All";
+    const validJurisdiction = [...filter.options].some(option => option.value === jurisdiction || option.text === jurisdiction);
+    query.value = q;
+    filter.value = validJurisdiction ? jurisdiction : "All";
+    if (!q) {
+      showLandingState();
+      return;
+    }
+    restoringHistory = true;
+    try { originalSearch({ scroll: false }); } finally { restoringHistory = false; }
+  }
+
+  function addCopyLinkAction() {
+    const controls = document.querySelector(".controls");
+    if (!controls || controls.querySelector("#copy-link")) return;
+    const button = document.createElement("button");
+    button.id = "copy-link";
+    button.type = "button";
+    button.textContent = "Copy search link";
+    button.addEventListener("click", async () => {
+      const url = buildSearchUrl().href;
+      try {
+        await navigator.clipboard.writeText(url);
+        button.textContent = "Link copied";
+      } catch (error) {
+        button.textContent = "Copy from address bar";
+      }
+      setTimeout(() => { button.textContent = "Copy search link"; }, 1600);
+    });
+    controls.appendChild(button);
+  }
+
   render = function enhancedRender(q, shouldScroll = true) {
     originalRender(q, shouldScroll);
     addBestMatch();
@@ -91,6 +150,13 @@
     addJurisdictionCues();
     addLongResultGuidance();
     improveEmptyState();
+    addCopyLinkAction();
+  };
+
+  search = function shareableSearch(options = { scroll: true }) {
+    const result = originalSearch(options);
+    syncUrl();
+    return result;
   };
 
   query.setAttribute("aria-describedby", "search-help");
@@ -110,4 +176,7 @@
       query.focus();
     }
   });
+
+  window.addEventListener("popstate", restoreFromUrl);
+  restoreFromUrl();
 })();
