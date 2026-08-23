@@ -15,6 +15,10 @@ const checks = [
   ['ADGM jurisdiction cue exists', ux.includes('ADGM: "Applies within the ADGM')],
   ['Long result guidance exists', ux.includes('Review the first results first.')],
   ['Best match behavior remains', ux.includes('Best match')],
+  ['Shareable query URL state exists', ux.includes('searchParams.set("q", q)')],
+  ['Shareable jurisdiction URL state exists', ux.includes('searchParams.set("jurisdiction", filter.value)')],
+  ['Browser history restoration exists', ux.includes('window.addEventListener("popstate", restoreFromUrl)')],
+  ['Copy search link action exists', ux.includes('Copy search link')],
   ['Mobile controls have touch-friendly minimum height', css.includes('min-height:44px')],
   ['Search ranking is not implemented in UX runtime', !/FlexSearch|scoreLaw|directIntentBoost|flexIds/.test(ux)]
 ];
