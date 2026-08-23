@@ -1,11 +1,11 @@
-// Phase 1/2 search runtime. Presentation and rendering remain in app.js.
+// Phase 1/2/6 search runtime. Presentation remains in app.js/ux-runtime.js.
 // If FlexSearch is unavailable, the original search() implementation remains active.
 (() => {
   if (!window.FlexSearch || !window.FlexSearch.Index || typeof laws === "undefined") return;
 
   const fallbackSearch = search;
   const index = new window.FlexSearch.Index({ tokenize: "forward", cache: true });
-  laws.forEach((law, id) => index.add(id, [law.number, law.title, law.topics, law.authority, law.jurisdiction, law.summary, law.relevance, law.note || ""].join(" ")));
+  laws.forEach((law, id) => index.add(id, [law.number, law.title, law.topics, law.authority, law.jurisdiction, law.status, law.summary, law.relevance, law.note || ""].join(" ")));
 
   const intentRules = [
     { any: ["extra hours", "work late", "working late", "after hours", "overtime"], add: ["overtime", "working hours", "labour", "employment"] },
@@ -25,6 +25,7 @@
     { any: ["money laundering", "aml", "customer due diligence", "cdd", "kyc"], add: ["aml", "anti money laundering", "customer due diligence", "kyc"] },
     { any: ["sanctions", "asset freeze", "terrorist list", "tfs"], add: ["sanctions", "targeted financial sanctions", "asset freeze", "aml"] }
   ];
+  const historyTerms = ["history", "historical", "repealed", "repeal", "superseded", "replaced", "old law", "previous law", "former law"];
 
   function intentTerms(rawQuery) {
     const clean = normalise(rawQuery);
@@ -56,7 +57,6 @@
       try { hits = index.search(term, { limit: 100, suggest: true }) || []; } catch (error) { hits = []; }
       hits.forEach((id, hitIndex) => rank.set(id, (rank.get(id) || 0) + Math.max(1, base - hitIndex)));
     };
-
     const intents = intentTerms(rawQuery);
     const full = normalise(rawQuery);
     if (full) addHits(full, intents.length ? 80 : 160);
@@ -65,16 +65,34 @@
     return rank;
   }
 
+  function isSuperseded(law) {
+    const status = normalise(law.status || "");
+    return /superseded|repealed|replaced|revoked|abrogated/.test(status);
+  }
+
+  function wantsHistory(rawQuery) {
+    const clean = normalise(rawQuery);
+    return historyTerms.some(term => clean.includes(normalise(term)));
+  }
+
   search = function flexSearch(options = { scroll: true }) {
     const q = query.value.trim();
     if (!q) return;
     try {
       const rank = flexIds(q);
       if (!rank.size) return fallbackSearch(options);
+      const includeOld = Boolean(window.mizanIncludeSuperseded) || wantsHistory(q);
       current = [...rank.keys()]
         .map(id => ({ l: laws[id], intent: directIntentBoost(laws[id], q), flex: rank.get(id), legacy: scoreLaw(laws[id], q) }))
         .filter(x => x.l && (filter.value === "All" || x.l.jurisdiction === filter.value))
-        .sort((a, b) => (b.intent - a.intent) || (b.flex - a.flex) || (b.legacy - a.legacy) || a.l.authority.localeCompare(b.l.authority))
+        .filter(x => includeOld || !isSuperseded(x.l))
+        .sort((a, b) => {
+          if (!includeOld) {
+            const currentDelta = Number(isSuperseded(a.l)) - Number(isSuperseded(b.l));
+            if (currentDelta) return currentDelta;
+          }
+          return (b.intent - a.intent) || (b.flex - a.flex) || (b.legacy - a.legacy) || a.l.authority.localeCompare(b.l.authority);
+        })
         .map(x => x.l);
       if (!current.length) return fallbackSearch(options);
       render(q, options.scroll);
