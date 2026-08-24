@@ -1,9 +1,10 @@
 name: Validate static regulatory data
 
 on:
+  workflow_dispatch:
   push:
     branches:
-      - 'agent/phase1-flexsearch'
+      - 'agent/**'
     paths:
       - 'app.js'
       - 'content-2026.js'
@@ -11,6 +12,7 @@ on:
       - 'content-upgrade-aug2026.js'
       - 'flexsearch-runtime.js'
       - 'ux-runtime.js'
+      - 'applies-to.js'
       - 'index.html'
       - 'data/**'
       - 'scripts/**'
@@ -25,6 +27,7 @@ on:
       - 'content-upgrade-aug2026.js'
       - 'flexsearch-runtime.js'
       - 'ux-runtime.js'
+      - 'applies-to.js'
       - 'index.html'
       - 'data/**'
       - 'scripts/**'

@@ -1,10 +1,12 @@
 name: Validate regulatory data
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - 'app.js'
       - 'content-*.js'
+      - 'applies-to.js'
       - 'data/**'
       - 'scripts/**'
       - 'package.json'
@@ -14,6 +16,7 @@ on:
     paths:
       - 'app.js'
       - 'content-*.js'
+      - 'applies-to.js'
       - 'data/**'
       - 'scripts/**'
       - 'package.json'
@@ -34,7 +37,7 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci --ignore-scripts
 
       - name: Build static regulatory data
         run: npm run build:data
