@@ -1,6 +1,7 @@
 const fs=require('fs');
 const data=JSON.parse(fs.readFileSync('data/index.json','utf8'));
 const byNumber=n=>data.find(x=>x.number===n);
+const byTitle=(pattern,jurisdiction)=>data.find(x=>(!jurisdiction||x.jurisdiction===jurisdiction)&&pattern.test(x.title_en||''));
 const assert=(ok,msg)=>{if(!ok){console.error(`FAIL: ${msg}`);process.exitCode=1}else console.log(`PASS: ${msg}`)};
 const labour=byNumber('Federal Decree-Law No. 33 of 2021');
 assert(labour?.applies_to.some(x=>x.entity_type==='Private-sector employee'),'Labour Law has private-sector employee scope');
@@ -11,9 +12,10 @@ assert(ct?.does_not_apply_to.some(x=>/Wages/.test(x)),'Corporate Tax identifies 
 const difc=byNumber('DIFC Law No. 5 of 2020');
 assert(difc?.regulator==='DIFC Commissioner of Data Protection','DIFC DP regulator is Commissioner of Data Protection');
 assert(difc?.effective_date==='2020-06-01','DIFC DP commencement date is 2020-06-01');
-const vara=byNumber('Dubai Law No. 4 of 2022');
-assert(vara?.does_not_apply_to.some(x=>/DIFC/.test(x)),'VARA territorial scope excludes DIFC');
-const regs=byNumber('VARA Virtual Assets and Related Activities Regulations 2023');
+const vara=byNumber('Dubai Law No. 4 of 2022')||byTitle(/Law No\.?.*4.*2022.*Virtual Assets|Virtual Assets.*Law/i,'Dubai');
+assert(vara,'VARA Dubai Law record is present');
+assert(vara?.does_not_apply_to.some(x=>/DIFC|Dubai International Financial Centre/i.test(x)),'VARA territorial scope excludes DIFC');
+const regs=byNumber('VARA Virtual Assets and Related Activities Regulations 2023')||byTitle(/Virtual Assets and Related Activities Regulations 2023/i,'Dubai');
 assert(regs?.applies_to.some(x=>/250,000,000/.test(x.condition)),'VARA Regulations capture large proprietary trader registration threshold');
 if(process.exitCode) process.exit(process.exitCode);
 console.log('Priority applicability assertions passed.');
