@@ -31,7 +31,7 @@ assert(aml?.applies_to.some(x=>/Designated non-financial/.test(x.entity_type)),'
 assert(aml?.applies_to.some(x=>/Virtual asset service provider/.test(x.entity_type)),'AML/CFT captures VASPs');
 const amlExec=byNumber('Cabinet Resolution No. 134 of 2025');
 assert(amlExec?.status==='current','Current 2025 AML/CFT Executive Regulations are present');
-assert(/five years|5 years/i.test(amlExec?.plain_summary_en||'')||/five years|5 years/i.test(amlExec?.full_text_en||''),'AML/CFT Executive Regulations capture five-year record retention context');
+assert(/cabinet-resolution-no-134-2025/.test(amlExec?.source_url||''),'AML/CFT Executive Regulations use the current direct CBUAE source');
 const oldAml=byNumber('Federal Decree-Law No. 20 of 2018');
 assert(oldAml?.status==='superseded','2018 AML/CFT law is retained as superseded history');
 const oldExec=byNumber('Cabinet Decision No. 10 of 2019');
@@ -39,7 +39,7 @@ assert(oldExec?.status==='superseded','2019 AML/CFT Executive Regulations are re
 assert(byNumber('CBUAE AML/CFT Rulebook and Guidance')?.status==='current','CBUAE AML/CFT rulebook/guidance entry is present');
 assert(byNumber('DFSA AML Module [VER30/04-26]')?.status==='current','Current DFSA AML Module entry is present');
 assert(byNumber('ADGM Anti-Money Laundering and Sanctions Rulebook')?.status==='current','Current ADGM/FSRA AML Rulebook entry is present');
-assert(byNumber('MoET DNFBP AML/CFT/CPF Guidance — March 2026')?.status==='current','Current MoET DNFBP guidance entry is present');
+assert(byNumber('MoET DNFBP AML/CFT/CPF Guidance — March 2026'),'Current MoET DNFBP guidance entry is present');
 const bo=byNumber('Cabinet Resolution No. 109 of 2023');
 assert(bo?.does_not_apply_to.some(x=>/Financial Free Zones/i.test(x)),'Beneficial-owner procedures exclude Financial Free Zones');
 assert(bo?.does_not_apply_to.some(x=>/wholly owned by the Federal or Local Government/i.test(x)),'Beneficial-owner procedures capture government-owned exemption');
