@@ -1,5 +1,6 @@
 // Content-only enrichment. No search or presentation logic is changed.
 const enrichLaw=(number,patch)=>{const item=laws.find(l=>l.number===number);if(item)Object.assign(item,patch)};
+const addLawIfMissing=(entry)=>{if(!laws.some(l=>l.number===entry.number))laws.push(entry)};
 
 enrichLaw("Federal Decree-Law No. 33 of 2021",{
  summary:"The principal UAE law for employment relationships in the general private sector. It covers employment contracts, work patterns, probation, working time and overtime, leave, wages, disciplinary action, termination, notice, non-compete restrictions, end-of-service benefits and labour disputes. It does not automatically govern DIFC or ADGM employment, and domestic workers are subject to a separate statutory regime.",
@@ -91,4 +92,134 @@ enrichLaw("Cabinet Resolution No. 109 of 2023",{
  appliesTo:["Covered UAE legal persons within the beneficial-owner procedures framework"],
  notApplyTo:["Entities excluded by the Resolution, including relevant Financial Free Zone entities and qualifying government-owned entities"],
  supersedes:"Cabinet Decision No. 58 of 2020"
+});
+
+// AML/CFT Step 1 — verified against current official/regulator sources in August 2026.
+// The 2018 federal law and 2019 executive decision are retained as historical entries only;
+// both were superseded by the 2025 framework and are not presented as current law.
+enrichLaw("Federal Decree-Law No. 10 of 2025",{
+ appliesTo:["Financial institutions","Designated non-financial businesses and professions (DNFBPs)","Virtual asset service providers (VASPs)","Non-profit organisations and other persons where the federal framework imposes obligations"],
+ notApplyTo:["Persons outside the statutory activity/scope triggers, subject to generally applicable criminal prohibitions"],
+ readWith:["Cabinet Resolution No. 134 of 2025"],
+ supersedes:"Federal Decree-Law No. 20 of 2018",
+ supersededBy:null,
+ note:"Current federal AML/CFT/CPF framework. CBUAE records Federal Decree-Law No. 10 of 2025 as in force from 14 October 2025; it superseded Federal Decree-Law No. 20 of 2018. Read with Cabinet Resolution No. 134 of 2025 and the rules/guidance of the competent supervisory authority. UAE FATF context: FATF removed the UAE from increased monitoring in February 2024; that status is contextual and does not reduce statutory AML/CFT obligations. Re-verify this entry monthly because AML/CFT and sanctions rules change frequently."
+});
+
+addLawIfMissing({
+ number:"Cabinet Resolution No. 134 of 2025",
+ title:"Executive Regulations of the Federal AML/CFT/CPF Law",
+ jurisdiction:"Federal",
+ authority:"UAE Cabinet",
+ status:"In force",
+ summary:"The current Executive Regulations under Federal Decree-Law No. 10 of 2025. They set the operational AML/CFT/CPF framework for financial institutions, DNFBPs, VASPs and relevant non-profit organisations, including risk assessment, customer due diligence, beneficial-owner identification, PEP controls, suspicious transaction reporting, internal controls and record keeping.",
+ relevance:"Use this Resolution for the practical compliance rules beneath the 2025 federal AML law. It defines the covered financial and DNFBP activities, includes thresholds for specified DNFBP activity, and requires covered firms to apply risk-based controls, CDD, ongoing monitoring and suspicious transaction reporting. Records covered by the retention rule must generally be kept for at least five years, calculated from the latest applicable trigger specified in the Resolution.",
+ topics:"aml cft cpf money laundering terrorist financing proliferation financing cdd customer due diligence kyc beneficial owner pep suspicious transaction str sar fiu goaml financial institution dnfbp vasp record keeping risk assessment",
+ source:"https://rulebook.centralbank.ae/en/rulebook/cabinet-resolution-no-134-2025-regarding-executive-regulations-federal-decree-law-no-10",
+ note:"Effective 14 December 2025 and in force. Article 3 includes, among others, real-estate brokers/agents for purchase or sale transactions; dealers in valuable metals and precious stones for cash transactions of AED 55,000 or more; specified legal/accounting activities; company and trust service providers; and commercial gaming operators at the stated AED 11,000 threshold. Article 70 repeals Cabinet Resolution No. 10 of 2019. Re-verify monthly.",
+ appliesTo:["Financial institutions","DNFBPs within the activities and thresholds in Article 3","Virtual asset service providers","Relevant non-profit organisations"],
+ notApplyTo:["Businesses that do not meet a covered activity or statutory trigger, except where another AML/CFT obligation applies"],
+ readWith:["Federal Decree-Law No. 10 of 2025"],
+ supersedes:"Cabinet Decision No. 10 of 2019",
+ supersededBy:null
+});
+
+addLawIfMissing({
+ number:"Federal Decree-Law No. 20 of 2018",
+ title:"Former Federal AML/CFT Law",
+ jurisdiction:"Federal",
+ authority:"UAE Federal Government",
+ status:"Superseded",
+ summary:"The former federal anti-money-laundering and counter-terrorist-financing statute. It was amended by Federal Decree-Law No. 26 of 2021 and Federal Decree-Law No. 7 of 2024 before being superseded by Federal Decree-Law No. 10 of 2025.",
+ relevance:"Use this entry for historical research, investigations or compliance periods governed by the former framework. For current obligations, use Federal Decree-Law No. 10 of 2025 instead.",
+ topics:"aml cft money laundering terrorist financing historical repealed superseded 2018 2021 2024",
+ source:"https://rulebook.centralbank.ae/en/rulebook/decree-federal-law-no-20-2018-anti-money-laundering-and-combating-financing-terrorism-and",
+ note:"CBUAE marks this law Repealed. It was effective from 23 October 2018, amended by Federal Decree-Law No. 26 of 2021 and Federal Decree-Law No. 7 of 2024, and superseded by Federal Decree-Law No. 10 of 2025. Do not use it as the anchor for current AML/CFT compliance.",
+ appliesTo:["Historical periods and matters governed by the former federal AML/CFT framework"],
+ notApplyTo:["Current compliance periods governed by Federal Decree-Law No. 10 of 2025"],
+ readWith:["Cabinet Decision No. 10 of 2019"],
+ supersedes:null,
+ supersededBy:"Federal Decree-Law No. 10 of 2025"
+});
+
+addLawIfMissing({
+ number:"Cabinet Decision No. 10 of 2019",
+ title:"Former Executive Regulations of the Federal AML/CFT Law",
+ jurisdiction:"Federal",
+ authority:"UAE Cabinet",
+ status:"Superseded",
+ summary:"The former Executive Regulations under Federal Decree-Law No. 20 of 2018. They contained the previous operational CDD, reporting, record-keeping and AML/CFT requirements and were amended by Cabinet Resolution No. 24 of 2022.",
+ relevance:"Use this entry only for historical compliance periods. Current operational AML/CFT/CPF requirements are governed by Cabinet Resolution No. 134 of 2025.",
+ topics:"aml cft executive regulation cdd suspicious transaction record keeping historical repealed superseded 2019 2022",
+ source:"https://rulebook.centralbank.ae/en/rulebook/cabinet-decision-no-10-2019-concerning-implementing-regulation-decree-law-no-20-2018-anti",
+ note:"CBUAE marks this Decision Repealed. Cabinet Resolution No. 134 of 2025 expressly repealed it and replaced the former executive framework from 14 December 2025.",
+ appliesTo:["Historical periods and matters governed by the former federal AML/CFT executive regulations"],
+ notApplyTo:["Current compliance periods governed by Cabinet Resolution No. 134 of 2025"],
+ readWith:["Federal Decree-Law No. 20 of 2018"],
+ supersedes:null,
+ supersededBy:"Cabinet Resolution No. 134 of 2025"
+});
+
+addLawIfMissing({
+ number:"CBUAE AML/CFT Rulebook and Guidance",
+ title:"AML/CFT Requirements and Guidance for Licensed Financial Institutions",
+ jurisdiction:"Federal",
+ authority:"Central Bank of the UAE (CBUAE)",
+ status:"In force",
+ summary:"CBUAE's AML/CFT rulebook area brings together the current federal AML/CFT laws, CBUAE procedures and guidance applicable to licensed financial institutions. It covers the risk-based approach, customer and transaction risk, CDD, suspicious activity reporting, sanctions and targeted-financial-sanctions controls, and sector-specific financial-crime guidance.",
+ relevance:"Use this source when a bank, finance company, exchange house, insurer or other CBUAE-licensed financial institution needs to translate the federal AML/CFT framework into regulator-specific systems and controls. CBUAE materials should be read together with Federal Decree-Law No. 10 of 2025 and Cabinet Resolution No. 134 of 2025.",
+ topics:"cbuae aml cft licensed financial institution bank exchange house insurer risk based approach sanctions screening goaml str sar cdd kyc guidance",
+ source:"https://rulebook.centralbank.ae/en/rulebook/amlcft",
+ note:"CBUAE's live Rulebook is the preferred current source because individual guidance documents and notices are updated over time. Suspicious reports are made to the UAE FIU through the prescribed reporting framework, including goAML where applicable. Verify the current CBUAE notice/guidance relevant to the institution and activity before relying on a specific control requirement.",
+ appliesTo:["CBUAE licensed financial institutions within the scope of the relevant rule, notice or guidance"],
+ notApplyTo:["Firms regulated solely by DFSA or FSRA for financial-services activity, which have separate regulator rulebooks in addition to applicable federal law"],
+ readWith:["Federal Decree-Law No. 10 of 2025","Cabinet Resolution No. 134 of 2025"]
+});
+
+addLawIfMissing({
+ number:"DFSA AML Module [VER30/04-26]",
+ title:"Anti-Money Laundering, Counter-Terrorist Financing and Sanctions Module",
+ jurisdiction:"DIFC",
+ authority:"Dubai Financial Services Authority (DFSA)",
+ status:"In force",
+ summary:"The DFSA's current AML Module sets the AML, counter-terrorist-financing and sanctions systems and controls for Relevant Persons in the DIFC regulatory framework. It covers business and customer risk assessment, CDD, enhanced and simplified due diligence, ongoing monitoring, correspondent banking, transfers, sanctions, MLRO requirements, suspicious activity reporting, training, record keeping and DNFBP supervision.",
+ relevance:"Use this Module for DFSA-regulated firms and registered DNFBPs in the DIFC. It is not a substitute for the applicable UAE federal AML/CFT framework; DIFC firms must identify both the DFSA requirements and the federal obligations that apply to them.",
+ topics:"dfsa difc aml cft sanctions relevant person authorised firm authorized firm registered dnfbp cdd mlro suspicious activity sar str risk assessment record keeping crypto transfer",
+ source:"https://dfsaen.thomsonreuters.com/rulebook/anti-money-laundering-counter-terrorist-financing-and-sanctions-module-aml-ver3004-26",
+ note:"Current online version identified as VER30/04-26. The Module includes specific chapters on CDD, sanctions, MLROs, suspicious activity reports, record keeping and DNFBP registration/supervision. Re-check the DFSA current-version marker before publishing or citing a rule number.",
+ appliesTo:["DFSA Relevant Persons to the extent specified by the AML Module","DFSA Authorised Firms","DFSA Registered DNFBPs where applicable"],
+ notApplyTo:["Mainland financial institutions regulated solely by CBUAE","ADGM firms regulated by FSRA"],
+ readWith:["Federal Decree-Law No. 10 of 2025","Cabinet Resolution No. 134 of 2025"]
+});
+
+addLawIfMissing({
+ number:"ADGM Anti-Money Laundering and Sanctions Rulebook",
+ title:"Anti-Money Laundering and Sanctions Rules and Guidance",
+ jurisdiction:"ADGM",
+ authority:"Financial Services Regulatory Authority (FSRA)",
+ status:"In force",
+ summary:"The FSRA AML Rulebook provides ADGM's financial-services AML, counter-terrorist-financing, counter-proliferation-financing and sanctions framework. It uses a risk-based approach and operates alongside the UAE federal AML/CFT legislation.",
+ relevance:"Use this Rulebook for FSRA-regulated persons in ADGM when determining regulator-specific AML systems, controls, CDD, reporting, sanctions and governance requirements. ADGM expressly states that its AML Rules must be read in the context of the relevant UAE federal laws and legislation.",
+ topics:"adgm fsra aml cft cpf sanctions rulebook authorised person authorized person relevant person cdd risk based approach mlro suspicious transaction federal law",
+ source:"https://www.adgm.com/operating-in-adgm/financial-and-cyber-crime-prevention/aml",
+ note:"FSRA finalised enhancements to the AML Framework on 21 May 2026, including amendments to FSMR and the AML Rulebook to reflect federal-law developments and FATF standards. Use the live ADGM Rulebook/current amendments rather than an older PDF snapshot. Re-verify monthly.",
+ appliesTo:["Persons within the application provisions of the FSRA AML Rulebook","FSRA Authorised Persons and other covered ADGM persons as specified by the Rulebook"],
+ notApplyTo:["DIFC firms regulated by DFSA","Mainland financial institutions regulated solely by CBUAE"],
+ readWith:["Federal Decree-Law No. 10 of 2025","Cabinet Resolution No. 134 of 2025"]
+});
+
+addLawIfMissing({
+ number:"MoET DNFBP AML/CFT/CPF Guidance — March 2026",
+ title:"Guidelines for Designated Non-Financial Businesses and Professions",
+ jurisdiction:"Federal",
+ authority:"UAE Ministry of Economy and Tourism",
+ status:"Current guidance",
+ summary:"Current Ministry of Economy and Tourism guidance explains how the federal AML/CFT/CPF framework applies to supervised DNFBPs. The DNFBP perimeter includes real-estate brokers and agents, dealers in precious metals and stones, company and trust service providers, and specified independent legal and accounting activities when the statutory transaction/activity conditions are met.",
+ relevance:"Use this guidance when a non-financial business needs to determine whether it is a DNFBP and what practical AML controls are expected. It is particularly relevant to real-estate brokerage, precious-metals/stones activity and corporate-service-provider businesses supervised by the Ministry.",
+ topics:"dnfbp ministry economy tourism moet aml cft cpf real estate broker agent precious metals stones dealer company service provider trust service provider lawyer notary accountant guidance goaml cdd str",
+ source:"https://www.moet.gov.ae/documents/20121/0/AML_CFT_Guidelines_for_Designated_Non_Financial_Businesses_and_Professions_March_2026.pdf",
+ note:"The substantive obligations come from Federal Decree-Law No. 10 of 2025, Cabinet Resolution No. 134 of 2025 and applicable supervisory decisions; this guidance explains implementation and does not replace the legislation. Cabinet Resolution No. 134 of 2025 sets activity-specific DNFBP triggers, including AED 55,000 for covered cash transactions by dealers in valuable metals and precious stones. Ministry materials also list Ministerial Decision No. 253 of 2025 concerning controls and conditions for DNFBP registration by licensing authorities. Verify the latest Ministry page and supervisory allocation before relying on a sector-specific requirement.",
+ appliesTo:["DNFBPs supervised by the Ministry of Economy and Tourism within the relevant statutory activity triggers"],
+ notApplyTo:["Businesses outside the DNFBP definitions/triggers unless another AML/CFT regime applies","DNFBPs supervised by another competent authority for the relevant activity"],
+ readWith:["Federal Decree-Law No. 10 of 2025","Cabinet Resolution No. 134 of 2025"]
 });
