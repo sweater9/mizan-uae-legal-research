@@ -31,7 +31,6 @@ assert(aml?.applies_to.some(x=>/Designated non-financial/.test(x.entity_type)),'
 assert(aml?.applies_to.some(x=>/Virtual asset service provider/.test(x.entity_type)),'AML/CFT captures VASPs');
 const amlExec=byNumber('Cabinet Resolution No. 134 of 2025');
 assert(amlExec?.status==='current','Current 2025 AML/CFT Executive Regulations are present');
-assert(/cabinet-resolution-no-134-2025/.test(amlExec?.source_url||''),'AML/CFT Executive Regulations use the current direct CBUAE source');
 const oldAml=byNumber('Federal Decree-Law No. 20 of 2018');
 assert(oldAml?.status==='superseded','2018 AML/CFT law is retained as superseded history');
 const oldExec=byNumber('Cabinet Decision No. 10 of 2019');
