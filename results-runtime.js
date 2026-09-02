@@ -74,17 +74,19 @@
       <div class="brief-masthead"><span class="eyebrow">Mizan research answer</span><span class="brief-status">${historical ? "Historical material" : "Source-based overview"}</span></div>
       <h3 id="answer-heading">What the source says</h3>
       <p class="answer-scope">Starting point · ${escapeHtml(lead.jurisdiction)} · ${escapeHtml(lead.title)}</p>
-      <p class="answer-text">${escapeHtml(lead.summary)}</p>
+      <p class="answer-text">${escapeHtml(lead.researchAnswer || lead.summary)}</p>
       <p>${cite}</p>
-      <p class="brief-limit">This overview follows the top search match. It is not a determination that the rule applies to your situation.</p>
+      ${lead.researchReviewed ? `<p class="brief-limit">Action checklist checked ${escapeHtml(lead.researchReviewed)} · <a href="${escapeHtml(lead.researchSource)}" target="_blank" rel="noreferrer">Official supporting text ↗</a></p>` : ""}
+      <p class="brief-limit">This overview follows the top search match. Confirm the entity type, activity and exclusions before treating it as an applicable requirement.</p>
       <div class="brief-grid">
-        <section class="brief-section"><span class="section-number">02 / APPLICABILITY</span><h3>Does this apply to you?</h3>
-          <span class="applicability-status">Need more information</span>
+        <section class="brief-section"><span class="section-number">02 / APPLICABILITY</span><h3>Who is covered?</h3>
+          <span class="applicability-status">Confirm your circumstances</span>
           <p>Check your entity and activity against the scope of ${escapeHtml(lead.number)}.</p>
           <ul>${bullets(lead.appliesTo || ["The indexed source does not specify the covered entities. Check the official scope provisions."])}</ul>
           <p>${cite}</p>
         </section>
-        <section class="brief-section"><span class="section-number">03 / ACTIONS</span><h3>What to do next</h3>
+        <section class="brief-section"><span class="section-number">03 / ACTIONS</span><h3>Your next steps</h3>
+          ${lead.actionSteps && !historical ? `<ol class="action-checklist">${bullets(lead.actionSteps)}</ol>` : ""}
           <p class="operational-guidance">${escapeHtml(lead.relevance || "Check the official text for operational requirements.")}</p>
           <p>${cite}</p>
           <ol class="research-steps"><li>Confirm the jurisdiction and scope for your situation.</li><li>Check the official text and related instruments below for the applicable procedure and timing.</li><li>Record the provision and evidence supporting your decision.</li></ol>
@@ -96,8 +98,9 @@
         ${lead.note ? `<details><summary>Read the source’s status and scope notes</summary><p>${escapeHtml(lead.note)}</p></details>` : ""}
         <p>${cite}</p>
       </section>
-      <section class="narrow-panel"><h3>Narrow the applicable framework</h3><p>${scope.length > 1 ? "Your search spans several jurisdictions. Choose one to review its own sources." : "Choose a jurisdiction to refine the research. Entity type and activity still need to be checked against the source."}</p>
-        <div class="scope-options">${["All", "Federal", "Dubai", "DIFC", "ADGM"].map(value => `<button type="button" data-scope="${value}" aria-pressed="${filter.value === value}">${value === "All" ? "All jurisdictions" : value === "Federal" ? "Federal / non-financial free zones" : value}</button>`).join("")}</div>
+      <section class="narrow-panel"><h3>Where is the business established?</h3><p>${scope.length > 1 ? "Your search spans several jurisdictions. Choose one to review its own sources." : "Choose a jurisdiction to refine the research. Entity type and activity still need to be checked against the source."}</p>
+        ${filter.value === "Mainland" ? `<p class="mainland-scope"><strong>Mainland research view:</strong> federal and available emirate-specific sources. Local rules apply only within their stated scope; coverage of local laws across all seven emirates is not complete. Some federal rules also cover non-financial free zones.</p>` : ""}
+        <div class="scope-options">${["All", "Federal", "Mainland", "DIFC", "ADGM"].map(value => `<button type="button" data-scope="${value}" aria-pressed="${filter.value === value}">${value === "All" ? "All jurisdictions" : value === "Federal" ? "Federal sources" : value}</button>`).join("")}</div>
       </section>
     </section>`;
   }
