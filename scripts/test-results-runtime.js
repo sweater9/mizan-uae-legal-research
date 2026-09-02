@@ -10,7 +10,7 @@ context.render('example',false);
 let html=element('research-answer').innerHTML;
 assert(html.includes('A sourced summary &lt;script&gt;'));
 assert(!html.includes('<script>'));
-assert(html.includes('Need more information'));
+assert(html.includes('Confirm your circumstances'));
 assert(html.includes('Covered companies') && html.includes('Excluded companies'));
 assert(html.includes('A sourced practical instruction'));
 assert(html.includes('#card-Example%201'));

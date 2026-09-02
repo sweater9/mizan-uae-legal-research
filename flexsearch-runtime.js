@@ -84,7 +84,7 @@
       const includeOld = Boolean(window.mizanIncludeSuperseded) || wantsHistory(q);
       current = [...rank.keys()]
         .map(id => ({ l: laws[id], intent: directIntentBoost(laws[id], q), flex: rank.get(id), legacy: scoreLaw(laws[id], q) }))
-        .filter(x => x.l && (filter.value === "All" || x.l.jurisdiction === filter.value))
+        .filter(x => x.l && matchesJurisdiction(x.l, filter.value))
         .filter(x => includeOld || !isSuperseded(x.l))
         .sort((a, b) => {
           if (!includeOld) {

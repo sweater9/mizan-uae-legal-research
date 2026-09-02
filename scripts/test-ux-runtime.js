@@ -10,7 +10,7 @@ const glossaryPath = path.join(root, 'data', 'glossary.json');
 
 const checks = [
   ['UX runtime is loaded', html.includes('<script src="ux-runtime.js"></script>')],
-  ['Dubai jurisdiction filter remains available', html.includes('<option>Dubai</option>')],
+  ['Mainland research filter is available', html.includes('<option>Mainland</option>')],
   ['Federal jurisdiction cue exists', ux.includes('Federal: "Generally relevant across the UAE')],
   ['Dubai jurisdiction cue exists', ux.includes('Dubai: "Dubai-specific framework')],
   ['DIFC jurisdiction cue exists', ux.includes('DIFC: "Applies within the DIFC')],

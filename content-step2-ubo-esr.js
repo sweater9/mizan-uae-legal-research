@@ -133,3 +133,17 @@ addLawIfMissing({
   supersedes: null,
   supersededBy: "ADGM Beneficial Ownership and Control Regulations 2022"
 });
+
+// Source-checked operational brief. This review date covers only this checklist,
+// not the whole index. Official decision: Articles 3, 5, 8, 10 and 11.
+enrichLaw("Cabinet Resolution No. 109 of 2023", {
+  researchAnswer: "Covered UAE legal persons must identify their ultimate natural-person owners or controllers and maintain beneficial-owner records. Check the scope and exemptions first; financial free zones are excluded from this decision.",
+  actionSteps: [
+    "Check whether the entity falls within the decision or an exemption (Article 3).",
+    "Trace direct and indirect ownership and voting rights of 25% or more, and control by other means; apply the fallback tests where necessary (Article 5).",
+    "Maintain the beneficial-owner register and update known changes within 15 days (Article 8).",
+    "Maintain the partners/shareholders register and provide the required information to the Registrar (Articles 10–11)."
+  ],
+  researchReviewed: "2 September 2026",
+  researchSource: "https://www.moet.gov.ae/documents/20121/0/Cabinet%2BDecision%2B109-2023%2BEnglish%2BVersion%2B06062024.pdf/f7138fc2-fe12-cef3-077b-b4c49c12eabd?t=1718181974877"
+});
