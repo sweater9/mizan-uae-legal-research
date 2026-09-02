@@ -139,6 +139,7 @@
             </details>
             <div class="card-actions">
               <a class="source" href="${escapeHtml(law.source)}" target="_blank" rel="noreferrer">View official source <span>↗</span></a>
+              ${law.regulatorSource ? `<a class="source" href="${escapeHtml(law.regulatorSource)}" target="_blank" rel="noreferrer">CMA regulations ↗</a>` : ""}
               <button type="button" class="permalink" data-copy="${escapeHtml(law.number)}">Copy link to this entry</button>
             </div>
           </div>
@@ -162,7 +163,7 @@
 
   window.mizanBriefText = () => {
     const brief = document.getElementById("research-answer").innerText;
-    return `${query.value.trim()}\n\n${brief}\n\nEVIDENCE\n${current.map((law, i) => `[${i+1}] ${law.number} — ${law.title}\n${law.status} · ${law.jurisdiction}\n${law.summary}\nSource: ${law.source}`).join("\n\n")}\n\nConfirm current consolidated text and effective dates before relying on this research.`;
+    return `${query.value.trim()}\n\n${brief}\n\nEVIDENCE\n${current.map((law, i) => `[${i+1}] ${law.number} — ${law.title}\n${law.status} · ${law.jurisdiction}\n${law.summary}\nSource: ${law.source}${law.regulatorSource ? `\nRegulator: ${law.regulatorSource}` : ""}`).join("\n\n")}\n\nConfirm current consolidated text and effective dates before relying on this research.`;
   };
 
   list.addEventListener("click", async event => {
