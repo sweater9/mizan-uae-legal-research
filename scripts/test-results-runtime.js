@@ -31,5 +31,5 @@ assert.equal(context.filter.value,'Mainland','legacy Dubai click maps to Mainlan
 const htmlSource=fs.readFileSync('index.html','utf8');
 const localAssets=[...htmlSource.matchAll(/(?:src|href)="([^":]+\.(?:js|css)(?:\?[^"]*)?)"/g)].map(m=>m[1]);
 assert(localAssets.length>10);
-assert(localAssets.every(asset=>asset.endsWith('?v=20260902-mainland-fix')),'all local scripts and styles use the same release version');
+assert(localAssets.every(asset=>asset.endsWith('?v=20260902-cma')),'all local scripts and styles use the same release version');
 console.log('Legacy button and cache-version regression checks passed.');

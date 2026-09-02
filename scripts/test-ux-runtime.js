@@ -9,7 +9,7 @@ const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const glossaryPath = path.join(root, 'data', 'glossary.json');
 
 const checks = [
-  ['UX runtime is loaded', html.includes('<script src="ux-runtime.js?v=20260902-mainland-fix"></script>')],
+  ['UX runtime is loaded', html.includes('<script src="ux-runtime.js?v=20260902-cma"></script>')],
   ['Mainland research filter is available', html.includes('<option>Mainland</option>')],
   ['Federal jurisdiction cue exists', ux.includes('Federal: "Generally relevant across the UAE')],
   ['Dubai jurisdiction cue exists', ux.includes('Dubai: "Dubai-specific framework')],
