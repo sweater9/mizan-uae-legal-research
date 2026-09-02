@@ -11,6 +11,8 @@
   function scrollToEntry(number, attempt = 0) {
     const target = document.getElementById(entryId(number));
     if (target) {
+      const detail = target.querySelector("details");
+      if (detail) detail.open = true;
       target.scrollIntoView({ behavior: "smooth", block: "center" });
       target.classList.add("flash");
       setTimeout(() => target.classList.remove("flash"), 1200);

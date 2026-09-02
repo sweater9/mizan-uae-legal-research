@@ -56,6 +56,52 @@
     return `<div class="timeline">${prev} <b>${escapeHtml(law.number)}</b> ${next}</div>`;
   }
 
+  function briefModel(items) {
+    // A search match is not a legal applicability decision. Never combine regimes.
+    const lead = items[0];
+    if (!lead) return null;
+    const historical = /superseded|repealed|former|historical/i.test(lead.status || "");
+    return {lead, historical, scope: [...new Set(items.map(law => law.jurisdiction))]};
+  }
+
+  function renderBrief(items) {
+    const model = briefModel(items);
+    if (!model) return "";
+    const {lead, historical, scope} = model;
+    const cite = `<a href="#${entryId(lead.number)}" class="brief-citation">[1] ${escapeHtml(lead.number)}</a>`;
+    const bullets = values => values.map(value => `<li>${escapeHtml(value)}</li>`).join("");
+    return `<section class="answer-brief" aria-labelledby="answer-heading">
+      <div class="brief-masthead"><span class="eyebrow">Mizan research answer</span><span class="brief-status">${historical ? "Historical material" : "Source-based overview"}</span></div>
+      <h3 id="answer-heading">What the source says</h3>
+      <p class="answer-scope">Starting point · ${escapeHtml(lead.jurisdiction)} · ${escapeHtml(lead.title)}</p>
+      <p class="answer-text">${escapeHtml(lead.summary)}</p>
+      <p>${cite}</p>
+      <p class="brief-limit">This overview follows the top search match. It is not a determination that the rule applies to your situation.</p>
+      <div class="brief-grid">
+        <section class="brief-section"><span class="section-number">02 / APPLICABILITY</span><h3>Does this apply to you?</h3>
+          <span class="applicability-status">Need more information</span>
+          <p>Check your entity and activity against the scope of ${escapeHtml(lead.number)}.</p>
+          <ul>${bullets(lead.appliesTo || ["The indexed source does not specify the covered entities. Check the official scope provisions."])}</ul>
+          <p>${cite}</p>
+        </section>
+        <section class="brief-section"><span class="section-number">03 / ACTIONS</span><h3>What to do next</h3>
+          <p class="operational-guidance">${escapeHtml(lead.relevance || "Check the official text for operational requirements.")}</p>
+          <p>${cite}</p>
+          <ol class="research-steps"><li>Confirm the jurisdiction and scope for your situation.</li><li>Check the official text and related instruments below for the applicable procedure and timing.</li><li>Record the provision and evidence supporting your decision.</li></ol>
+        </section>
+      </div>
+      <section class="brief-watch"><span class="section-number">04 / WATCH-OUTS</span><h3>Check before you rely on this</h3>
+        ${historical ? '<p><strong>This is historical material. Do not use it as a current compliance instruction.</strong></p>' : ""}
+        <ul>${bullets(lead.notApplyTo || ["Exclusions are not specified in this entry; confirm them in the official text."])}</ul>
+        ${lead.note ? `<details><summary>Read the source’s status and scope notes</summary><p>${escapeHtml(lead.note)}</p></details>` : ""}
+        <p>${cite}</p>
+      </section>
+      <section class="narrow-panel"><h3>Narrow the applicable framework</h3><p>${scope.length > 1 ? "Your search spans several jurisdictions. Choose one to review its own sources." : "Choose a jurisdiction to refine the research. Entity type and activity still need to be checked against the source."}</p>
+        <div class="scope-options">${["All", "Federal", "Dubai", "DIFC", "ADGM"].map(value => `<button type="button" data-scope="${value}" aria-pressed="${filter.value === value}">${value === "All" ? "All jurisdictions" : value === "Federal" ? "Federal / non-financial free zones" : value}</button>`).join("")}</div>
+      </section>
+    </section>`;
+  }
+
   render = function expandedRender(q, shouldScroll = true) {
     intro.hidden = true;
     results.hidden = false;
@@ -65,6 +111,9 @@
       : "No close match in the verified starter index";
     copy.hidden = !current.length;
 
+    document.body.classList.add("has-results");
+    document.getElementById("research-answer").innerHTML = renderBrief(current);
+    document.getElementById("evidence-heading").hidden = !current.length;
     list.innerHTML = current.length
       ? current.map((law, index) => `
         <article class="card" id="${entryId(law.number)}">
@@ -77,12 +126,14 @@
             </div>
             <h3>${escapeHtml(law.number)}</h3>
             <h4>${escapeHtml(law.title)}</h4>
+            <details class="evidence-detail"><summary>Read summary, applicability and related rules</summary>
             <p>${escapeHtml(law.summary)}</p>
             <div class="why"><b>Why it matters</b><p>${escapeHtml(law.relevance)}</p></div>
             ${renderAppliesTo(law)}
             ${renderChips(law.readWith, "Read together with")}
             ${renderStatusTimeline(law)}
             ${law.note ? `<p class="note">Status note · ${escapeHtml(law.note)}</p>` : ""}
+            </details>
             <div class="card-actions">
               <a class="source" href="${escapeHtml(law.source)}" target="_blank" rel="noreferrer">View official source <span>↗</span></a>
               <button type="button" class="permalink" data-copy="${escapeHtml(law.number)}">Copy link to this entry</button>
@@ -94,12 +145,30 @@
     if (shouldScroll) scrollToResults();
   };
 
+  document.getElementById("research-answer").addEventListener("click", event => {
+    const button = event.target.closest("[data-scope]");
+    if (button) { filter.value = button.dataset.scope; search({scroll:false}); }
+  });
+
+  document.addEventListener("click", event => {
+    const citation = event.target.closest(".brief-citation");
+    if (!citation) return;
+    const target = document.getElementById(citation.getAttribute("href").slice(1));
+    if (target) { target.querySelector("details").open = true; }
+  });
+
+  window.mizanBriefText = () => {
+    const brief = document.getElementById("research-answer").innerText;
+    return `${query.value.trim()}\n\n${brief}\n\nEVIDENCE\n${current.map((law, i) => `[${i+1}] ${law.number} — ${law.title}\n${law.status} · ${law.jurisdiction}\n${law.summary}\nSource: ${law.source}`).join("\n\n")}\n\nConfirm current consolidated text and effective dates before relying on this research.`;
+  };
+
   list.addEventListener("click", async event => {
     const jump = event.target.closest("[data-jump]");
     if (jump) {
       const number = jump.dataset.jump;
       const target = document.getElementById(entryId(number));
       if (target) {
+        target.querySelector("details").open = true;
         target.scrollIntoView({ behavior: "smooth", block: "center" });
         target.classList.add("flash");
         setTimeout(() => target.classList.remove("flash"), 1200);
