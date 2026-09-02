@@ -66,7 +66,7 @@ function expandTerms(value){const clean=normalise(value),stopwords=new Set(["a",
 function scoreLaw(law,rawQuery){const phrase=normalise(rawQuery),terms=expandTerms(rawQuery),topics=normalise(law.topics),heading=normalise(`${law.number} ${law.title}`),regulator=normalise(`${law.authority} ${law.jurisdiction}`),body=normalise(`${law.summary} ${law.relevance} ${law.note||""}`);let score=0;if(topics.includes(phrase))score+=20;if(heading.includes(phrase))score+=16;if(regulator.includes(phrase))score+=12;if(body.includes(phrase))score+=8;terms.forEach(term=>{if(topics.includes(term))score+=5;if(heading.includes(term))score+=4;if(regulator.includes(term))score+=3;if(body.includes(term))score+=1});return score}
 function matchesJurisdiction(law, selected) {
   if (selected === "All") return true;
-  if (selected === "Mainland") return ["Federal", "Dubai"].includes(law.jurisdiction);
+  if (selected === "Mainland" || selected === "Dubai") return ["Federal", "Dubai"].includes(law.jurisdiction);
   return law.jurisdiction === selected;
 }
 function search(options={scroll:true}){const q=query.value.trim();if(!q)return;current=laws.map(l=>({l,s:scoreLaw(l,q)})).filter(x=>x.s>0&&matchesJurisdiction(x.l,filter.value)).sort((a,b)=>b.s-a.s||a.l.authority.localeCompare(b.l.authority)).map(x=>x.l);render(q,options.scroll)}

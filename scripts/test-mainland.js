@@ -16,13 +16,18 @@ function verifySearch(label) {
     assert(items.length>0,`${label}: ${q} returns results`);
     assert(items.every(l=>['Federal','Dubai'].includes(l.jurisdiction)),`${label}: excludes financial-free-zone records`);
     assert(items.some(l=>l.jurisdiction===(q==='vara'?'Dubai':'Federal')));
+    nodes.get('#jurisdiction').value='Dubai';
+    vm.runInContext('search({scroll:false})',ctx);
+    assert.deepEqual(Array.from(vm.runInContext('current',ctx),l=>l.number),Array.from(items,l=>l.number),`${label}: legacy Dubai returns same sources as Mainland`);
   }
 }
 verifySearch('fallback');
 ctx.window.FlexSearch=require('flexsearch');
 vm.runInContext(fs.readFileSync('flexsearch-runtime.js','utf8'),ctx);
 verifySearch('FlexSearch');
-assert(vm.runInContext('matchesJurisdiction({jurisdiction:"Dubai"},"Dubai")',ctx),'legacy scope helper remains exact');
+assert(vm.runInContext('matchesJurisdiction({jurisdiction:"Dubai"},"Dubai")',ctx));
+assert(vm.runInContext('matchesJurisdiction({jurisdiction:"Federal"},"Dubai")',ctx),'old Dubai selection includes federal rules');
+assert(!vm.runInContext('matchesJurisdiction({jurisdiction:"DIFC"},"Dubai")',ctx));
 assert(!vm.runInContext('matchesJurisdiction({jurisdiction:"DIFC"},"Mainland")',ctx));
 const ubo=vm.runInContext('laws.find(l=>l.number==="Cabinet Resolution No. 109 of 2023")',ctx);
 assert.equal(ubo.actionSteps.length,4);assert(ubo.researchSource.startsWith('https://www.moet.gov.ae/'));
