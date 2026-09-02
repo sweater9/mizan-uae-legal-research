@@ -132,7 +132,7 @@
     return url;
   }
   function syncUrl(mode="push") { if (restoringHistory) return; const next=buildSearchUrl(); if(next.href!==location.href) history[mode==="replace"?"replaceState":"pushState"]({},"",next); }
-  function showLandingState(){ current=[]; results.hidden=true; intro.hidden=false; copy.hidden=true; }
+  function showLandingState(){ current=[]; document.body.classList.remove("has-results"); results.hidden=true; intro.hidden=false; copy.hidden=true; }
   function restoreFromUrl(){ const p=new URLSearchParams(location.search),q=(p.get("q")||"").trim(),j=p.get("jurisdiction")||"All"; query.value=q; filter.value=[...filter.options].some(o=>o.value===j||o.text===j)?j:"All"; if(!q){showLandingState();return;} restoringHistory=true; try{originalSearch({scroll:false});}finally{restoringHistory=false;} }
   function addCopyLinkAction(){ const controls=document.querySelector(".controls"); if(!controls||controls.querySelector("#copy-link"))return; const b=document.createElement("button"); b.id="copy-link";b.type="button";b.textContent="Copy search link";b.onclick=async()=>{try{await navigator.clipboard.writeText(buildSearchUrl().href);b.textContent="Link copied";}catch{b.textContent="Copy from address bar";}setTimeout(()=>b.textContent="Copy search link",1600)};controls.appendChild(b); }
 

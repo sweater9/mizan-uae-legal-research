@@ -1,0 +1,27 @@
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const vm = require('node:vm');
+const elements = new Map();
+function element(id) { if (!elements.has(id)) elements.set(id, {innerHTML:'', innerText:'Brief text', hidden:false, listeners:{}, addEventListener(type, fn){this.listeners[type]=fn;}}); return elements.get(id); }
+const sample = {number:'Example 1',title:'Example rule',jurisdiction:'Federal',status:'Current',authority:'Authority',summary:'A sourced summary <script>',relevance:'A sourced practical instruction',source:'https://example.org/rule',appliesTo:['Covered companies'],notApplyTo:['Excluded companies'],note:'Confirm latest text'};
+const context = {window:{}, document:{getElementById:element,body:{classList:{add(){}}},addEventListener(){}},laws:[sample],current:[sample],render(){},intro:element('intro'),results:element('results'),title:element('title'),count:element('count'),copy:element('copy'),list:element('list'),filter:{value:'All'},query:{value:'example'},scrollToResults(){},search(){context.searchCalled=true;},setTimeout(){}};
+vm.createContext(context);vm.runInContext(fs.readFileSync('results-runtime.js','utf8'),context);
+context.render('example',false);
+let html=element('research-answer').innerHTML;
+assert(html.includes('A sourced summary &lt;script&gt;'));
+assert(!html.includes('<script>'));
+assert(html.includes('Need more information'));
+assert(html.includes('Covered companies') && html.includes('Excluded companies'));
+assert(html.includes('A sourced practical instruction'));
+assert(html.includes('#card-Example%201'));
+assert(element('list').innerHTML.includes('<details class="evidence-detail">'));
+assert(context.window.mizanBriefText().includes('https://example.org/rule'));
+element('research-answer').listeners.click({target:{closest(){return {dataset:{scope:'DIFC'}};}}});
+assert.equal(context.filter.value,'DIFC');assert(context.searchCalled);
+context.current=[{...sample,status:'Superseded'}];context.render('old rule',false);
+assert(element('research-answer').innerHTML.includes('Do not use it as a current compliance instruction'));
+context.current=[];context.render('no match',false);
+assert.equal(element('research-answer').innerHTML,'');assert.equal(element('evidence-heading').hidden,true);assert(context.copy.hidden);assert(element('list').innerHTML.includes('No verified match'));
+context.current=[{...sample,appliesTo:undefined,notApplyTo:undefined}];context.render('sparse source',false);
+assert(element('research-answer').innerHTML.includes('does not specify the covered entities'));
+console.log('Results runtime passed: source fidelity, escaping, applicability uncertainty, citations, collapsed evidence, copy, jurisdiction refinement, historical, empty and sparse states.');
