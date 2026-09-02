@@ -150,7 +150,7 @@
 
   document.getElementById("research-answer").addEventListener("click", event => {
     const button = event.target.closest("[data-scope]");
-    if (button) { filter.value = button.dataset.scope; search({scroll:false}); }
+    if (button) { filter.value = button.dataset.scope === "Dubai" ? "Mainland" : button.dataset.scope; search({scroll:false}); }
   });
 
   document.addEventListener("click", event => {
