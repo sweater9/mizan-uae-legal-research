@@ -2,8 +2,12 @@
 
 A zero-build, GitHub Pages-ready edition of Mizan.
 
-The starter index includes federal UAE legislation, DIFC/DFSA materials and
-ADGM/FSRA materials. Regulatory sources were last reviewed on 25 July 2026.
+The legal index includes federal UAE legislation, DIFC/DFSA materials and
+ADGM/FSRA materials. Regulatory sources were last reviewed on 8 September 2026.
+The September 2026 refresh adds the current federal AML/CFT/CPF framework,
+the current federal Central Bank framework, 2026 DFSA rulebook amendments and
+ADGM/FSRA AML framework updates. Future-dated rules are explicitly identified
+and must not be treated as currently operative before their effective date.
 
 Searching `beneficial owner` returns the cross-regulatory framework, including
 federal corporate-transparency and AML legislation, CBUAE guidance, DFSA and
@@ -13,7 +17,7 @@ Capital Market Authority layer.
 ## Publish with GitHub Pages
 
 1. Create a public GitHub repository.
-2. Upload `index.html`, `styles.css`, `app.js`, and `README.md` to the repository root.
+2. Upload `index.html`, `styles.css`, `app.js`, and the content files to the repository root.
 3. Open **Settings → Pages**.
 4. Under **Build and deployment**, select **Deploy from a branch**.
 5. Select the `main` branch and `/ (root)`, then save.
