@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Primary-source-first UAE regulatory intelligence.">
   <title>Mizan | UAE Regulatory Intelligence</title>
-  <link rel="stylesheet" href="styles.css?v=20260910-db">
+  <link rel="stylesheet" href="styles.css?v=20260910-change-monitor">
 </head>
 <body>
   <header class="topbar">
@@ -13,11 +13,15 @@
       <span class="mark" aria-hidden="true">م</span>
       <span><b>Mizan</b><small>UAE REGULATORY INTELLIGENCE</small></span>
     </a>
+    <nav class="topnav" aria-label="Primary">
+      <a href="#research">Research</a>
+      <a href="#change-monitor">Change Monitor</a>
+    </nav>
     <span class="status">● Official sources · updated 10 Sep 2026</span>
   </header>
 
   <main>
-    <section class="hero">
+    <section class="hero" id="research">
       <p class="eyebrow">UAE legislation, made navigable</p>
       <h1>Find the rule.<br><em>Understand the impact.</em></h1>
       <p class="lede">Ask a UAE regulatory question. Review the source-based answer, who it covers, the practical next steps and the official evidence. Choose Mainland, DIFC or ADGM to narrow your research.</p>
@@ -39,12 +43,33 @@
         <button data-query="DFSA AML">DFSA AML</button>
         <button data-query="FSRA conduct of business">FSRA conduct</button>
       </div>
+      <a class="change-cta" href="#change-monitor"><span>New</span> See exactly what changed →</a>
     </section>
 
     <section id="intro" class="principles">
       <article><span>01</span><h2>Primary sources first</h2><p>Official legislation, regulator rulebooks and government databases lead every result.</p></article>
       <article><span>02</span><h2>Jurisdiction made clear</h2><p>Mainland research includes federal and available emirate-specific rules. DIFC and ADGM remain separate views; each source keeps its actual jurisdiction.</p></article>
       <article><span>03</span><h2>Status, not guesswork</h2><p>Check the status and scope of each source. Historical rules are flagged, and a search match does not mean the rule applies to your business.</p></article>
+    </section>
+
+    <section id="change-monitor" class="change-monitor">
+      <div class="change-monitor-head">
+        <div>
+          <p class="eyebrow">Regulatory change intelligence</p>
+          <h2>Show me exactly what changed.</h2>
+          <p class="change-intro">Mizan does not merely report that a regulation changed. A verified change traces the exact provision from its previous state to its current state, then connects that delta to applicability, compliance impact, action and official evidence.</p>
+        </div>
+        <div class="change-summary">
+          <strong id="change-monitor-count">0 verified provision-level changes</strong>
+          <label for="change-jurisdiction">Jurisdiction</label>
+          <select id="change-jurisdiction"><option>All</option><option>DIFC</option><option>Federal</option><option>Mainland</option><option>ADGM</option></select>
+        </div>
+      </div>
+      <div class="change-pipeline" aria-label="Change intelligence workflow">
+        <span>Change detected</span><b>→</b><span>Exact provision changed</span><b>→</b><span>Before / after</span><b>→</b><span>Applicability</span><b>→</b><span>Compliance impact</span><b>→</b><span>Action</span><b>→</b><span>Evidence</span>
+      </div>
+      <div class="change-method-note"><b>Evidence rule:</b> Mizan only shows a provision-level delta as <strong>Verified change</strong> when an official amendment source supports the old/new alignment. Anything less stays <strong>Review required</strong>.</div>
+      <div id="change-monitor-list"></div>
     </section>
 
     <section id="results" class="results" hidden>
@@ -63,21 +88,23 @@
     </section>
   </main>
   <footer><div><b>Mizan</b><p>Source-based UAE regulatory research. Confirm applicability and the latest official text before making a compliance decision.</p></div><a href="https://uaelegislation.gov.ae/en/legislations" target="_blank" rel="noreferrer">UAE Legislation ↗</a></footer>
-  <script src="app.js?v=20260910-db"></script>
-  <script src="content-2026.js?v=20260910-db"></script>
-  <script src="content-details.js?v=20260910-db"></script>
-  <script src="content-upgrade-aug2026.js?v=20260910-db"></script>
-  <script src="content-step2-ubo-esr.js?v=20260910-db"></script>
-  <script src="content-step3-corporate-tax.js?v=20260910-db"></script>
-  <script src="content-step4-vat.js?v=20260910-db"></script>
-  <script src="content-step5-consumer-digital.js?v=20260910-db"></script>
-  <script src="content-update-sep2026.js?v=20260910-db"></script>
-  <script src="content-update-20260910.js?v=20260910-db"></script>
+  <script src="app.js?v=20260910-change-monitor"></script>
+  <script src="content-2026.js?v=20260910-change-monitor"></script>
+  <script src="content-details.js?v=20260910-change-monitor"></script>
+  <script src="content-upgrade-aug2026.js?v=20260910-change-monitor"></script>
+  <script src="content-step2-ubo-esr.js?v=20260910-change-monitor"></script>
+  <script src="content-step3-corporate-tax.js?v=20260910-change-monitor"></script>
+  <script src="content-step4-vat.js?v=20260910-change-monitor"></script>
+  <script src="content-step5-consumer-digital.js?v=20260910-change-monitor"></script>
+  <script src="content-update-sep2026.js?v=20260910-change-monitor"></script>
+  <script src="content-update-20260910.js?v=20260910-change-monitor"></script>
   <script src="https://unpkg.com/flexsearch@0.8.212/dist/flexsearch.bundle.min.js"></script>
-  <script src="content-cma.js?v=20260910-db"></script>
-  <script src="flexsearch-runtime.js?v=20260910-db"></script>
-  <script src="results-runtime.js?v=20260910-db"></script>
-  <script src="deep-link-runtime.js?v=20260910-db"></script>
-  <script src="ux-runtime.js?v=20260910-db"></script>
+  <script src="content-cma.js?v=20260910-change-monitor"></script>
+  <script src="flexsearch-runtime.js?v=20260910-change-monitor"></script>
+  <script src="results-runtime.js?v=20260910-change-monitor"></script>
+  <script src="deep-link-runtime.js?v=20260910-change-monitor"></script>
+  <script src="ux-runtime.js?v=20260910-change-monitor"></script>
+  <script src="change-data.js?v=20260910-change-monitor"></script>
+  <script src="change-monitor.js?v=20260910-change-monitor"></script>
 </body>
 </html>
