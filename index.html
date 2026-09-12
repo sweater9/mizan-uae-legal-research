@@ -1,113 +1,12 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Primary-source-first UAE regulatory intelligence.">
-  <title>Mizan | UAE Regulatory Intelligence</title>
-  <link rel="stylesheet" href="styles.css?v=20260912-db">
-  <link rel="stylesheet" href="change-monitor.css?v=20260912-db">
-</head>
-<body>
-  <header class="topbar">
-    <a class="brand" href="#" aria-label="Mizan home">
-      <span class="mark" aria-hidden="true">م</span>
-      <span><b>Mizan</b><small>UAE REGULATORY INTELLIGENCE</small></span>
-    </a>
-    <nav class="topnav" aria-label="Primary">
-      <a href="#research">Research</a>
-      <a href="#change-monitor">Change Monitor</a>
-    </nav>
-    <span class="status">● Official sources · updated 12 Sep 2026</span>
-  </header>
-
-  <main>
-    <section class="hero" id="research">
-      <p class="eyebrow">UAE legislation, made navigable</p>
-      <h1>Find the rule.<br><em>Understand the impact.</em></h1>
-      <p class="lede">Ask a UAE regulatory question. Review the source-based answer, who it covers, the practical next steps and the official evidence. Choose Mainland, DIFC or ADGM to narrow your research.</p>
-
-      <form id="search-form" class="search">
-        <label for="query">Legal topic or question</label>
-        <div class="search-row">
-          <input id="query" placeholder="e.g. beneficial owner, data protection, labour termination…" autocomplete="off">
-          <button type="submit">Research →</button>
-        </div>
-      </form>
-
-      <div class="examples">
-        <span>Try</span>
-        <button data-query="beneficial owner">Beneficial owner</button>
-        <button data-query="data protection">Data protection</button>
-        <button data-query="corporate tax">Corporate tax</button>
-        <button data-query="CMA UAE" data-jurisdiction="Federal">CMA UAE / former SCA</button>
-        <button data-query="DFSA AML">DFSA AML</button>
-        <button data-query="FSRA conduct of business">FSRA conduct</button>
-      </div>
-      <a class="change-cta" href="#change-monitor"><span>New</span> See exactly what changed →</a>
-    </section>
-
-    <section id="intro" class="principles">
-      <article><span>01</span><h2>Primary sources first</h2><p>Official legislation, regulator rulebooks and government databases lead every result.</p></article>
-      <article><span>02</span><h2>Jurisdiction made clear</h2><p>Mainland research includes federal and available emirate-specific rules. DIFC and ADGM remain separate views; each source keeps its actual jurisdiction.</p></article>
-      <article><span>03</span><h2>Status, not guesswork</h2><p>Check the status and scope of each source. Historical rules are flagged, and a search match does not mean the rule applies to your business.</p></article>
-    </section>
-
-    <section id="change-monitor" class="change-monitor">
-      <div class="change-monitor-head">
-        <div>
-          <p class="eyebrow">Regulatory change intelligence</p>
-          <h2>Show me exactly what changed.</h2>
-          <p class="change-intro">Mizan does not merely report that a regulation changed. A verified change traces the exact provision from its previous state to its current state, then connects that delta to applicability, compliance impact, action and official evidence.</p>
-        </div>
-        <div class="change-summary">
-          <strong id="change-monitor-count">0 verified provision-level changes</strong>
-          <label for="change-jurisdiction">Jurisdiction</label>
-          <select id="change-jurisdiction"><option>All</option><option>DIFC</option><option>Federal</option><option>Mainland</option><option>ADGM</option></select>
-        </div>
-      </div>
-      <div class="change-pipeline" aria-label="Change intelligence workflow">
-        <span>Change detected</span><b>→</b><span>Exact provision changed</span><b>→</b><span>Before / after</span><b>→</b><span>Applicability</span><b>→</b><span>Compliance impact</span><b>→</b><span>Action</span><b>→</b><span>Evidence</span>
-      </div>
-      <div class="change-method-note"><b>Evidence rule:</b> Mizan only shows a provision-level delta as <strong>Verified change</strong> when an official amendment source supports the old/new alignment. Anything less stays <strong>Review required</strong>.</div>
-      <div id="change-monitor-list"></div>
-    </section>
-
-    <section id="results" class="results" hidden>
-      <div class="results-head">
-        <div><p class="eyebrow">Research brief</p><h2 id="results-title"></h2><p id="results-count"></p></div>
-        <div class="controls">
-          <label for="jurisdiction">Jurisdiction</label>
-          <select id="jurisdiction"><option>All</option><option>Federal</option><option>Mainland</option><option>DIFC</option><option>ADGM</option></select>
-          <button id="copy" type="button">Copy brief</button>
-        </div>
-      </div>
-      <div id="research-answer"></div>
-      <div id="evidence-heading" class="evidence-heading" hidden><p class="eyebrow">05 / Evidence</p><h3>Sources and detailed research</h3><p>Search matches, not a list of obligations. Open each entry to check its scope.</p></div>
-      <div id="result-list"></div>
-      <aside class="notice"><b>Currency note</b> UAE legislation and regulatory rulebooks change frequently. Confirm the latest consolidated text, effective date, amendments and any implementing decisions through the linked official source before relying on a result.</aside>
-    </section>
-  </main>
-  <footer><div><b>Mizan</b><p>Source-based UAE regulatory research. Confirm applicability and the latest official text before making a compliance decision.</p></div><a href="https://uaelegislation.gov.ae/en/legislations" target="_blank" rel="noreferrer">UAE Legislation ↗</a></footer>
-  <script src="app.js?v=20260912-db"></script>
-  <script src="content-2026.js?v=20260912-db"></script>
-  <script src="content-details.js?v=20260912-db"></script>
-  <script src="content-upgrade-aug2026.js?v=20260912-db"></script>
-  <script src="content-step2-ubo-esr.js?v=20260912-db"></script>
-  <script src="content-step3-corporate-tax.js?v=20260912-db"></script>
-  <script src="content-step4-vat.js?v=20260912-db"></script>
-  <script src="content-step5-consumer-digital.js?v=20260912-db"></script>
-  <script src="content-update-sep2026.js?v=20260912-db"></script>
-  <script src="content-update-20260910.js?v=20260912-db"></script>
-  <script src="content-update-20260911.js?v=20260912-db"></script>
-  <script src="content-update-20260912.js?v=20260912-db"></script>
-  <script src="https://unpkg.com/flexsearch@0.8.212/dist/flexsearch.bundle.min.js"></script>
-  <script src="content-cma.js?v=20260912-db"></script>
-  <script src="flexsearch-runtime.js?v=20260912-db"></script>
-  <script src="results-runtime.js?v=20260912-db"></script>
-  <script src="deep-link-runtime.js?v=20260912-db"></script>
-  <script src="ux-runtime.js?v=20260912-db"></script>
-  <script src="change-data.js?v=20260912-db"></script>
-  <script src="change-monitor.js?v=20260912-db"></script>
-</body>
-</html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Primary-source-first UAE regulatory intelligence."><title>Mizan | UAE Regulatory Intelligence</title><link rel="stylesheet" href="styles.css?v=20260912-personal"><link rel="stylesheet" href="change-monitor.css?v=20260912-personal"><link rel="stylesheet" href="my-mizan.css?v=20260912-personal"></head><body>
+<header class="topbar"><a class="brand" href="#" aria-label="Mizan home"><span class="mark" aria-hidden="true">م</span><span><b>Mizan</b><small>UAE REGULATORY INTELLIGENCE</small></span></a><nav class="topnav" aria-label="Primary"><a href="#daily-inbox">My Inbox</a><a href="#research">Research</a><a href="#change-monitor">Change Monitor</a><a href="#my-mizan">Company Profile</a></nav><span class="status">● Official sources · updated 12 Sep 2026</span></header>
+<main>
+<section class="hero" id="research"><p class="eyebrow">UAE legislation, made navigable</p><h1>Find the rule.<br><em>Understand the impact.</em></h1><p class="lede">Ask a UAE regulatory question. Review the source-based answer, who it covers, the practical next steps and the official evidence. Choose Mainland, DIFC or ADGM to narrow your research.</p><form id="search-form" class="search"><label for="query">Legal topic or question</label><div class="search-row"><input id="query" placeholder="e.g. beneficial owner, data protection, labour termination…" autocomplete="off"><button type="submit">Research →</button></div></form><div class="examples"><span>Try</span><button data-query="beneficial owner">Beneficial owner</button><button data-query="data protection">Data protection</button><button data-query="corporate tax">Corporate tax</button><button data-query="CMA UAE" data-jurisdiction="Federal">CMA UAE / former SCA</button><button data-query="DFSA AML">DFSA AML</button><button data-query="FSRA conduct of business">FSRA conduct</button></div><a class="change-cta" href="#daily-inbox"><span>New</span> What changed that applies to me? →</a></section>
+<section id="intro" class="principles"><article><span>01</span><h2>Primary sources first</h2><p>Official legislation, regulator rulebooks and government databases lead every result.</p></article><article><span>02</span><h2>Applicability, explained</h2><p>Match verified changes to your saved regulatory profile and see why a change applies, may apply, or appears out of scope.</p></article><article><span>03</span><h2>Status, not guesswork</h2><p>Evidence confidence and applicability confidence are kept separate. Uncertain matches are sent for review rather than presented as legal conclusions.</p></article></section>
+<section id="daily-inbox" class="daily-inbox"><div class="daily-inbox-head"><div><p class="eyebrow">My Mizan · Daily Change Inbox</p><h2>What changed that applies to me?</h2><p>Mizan filters verified regulatory changes against your company profile, explains why you are seeing each item and keeps the official evidence one click away.</p></div><div id="daily-inbox-summary" class="daily-inbox-summary"><strong>Loading applicability…</strong></div></div><div id="daily-inbox-list"></div></section>
+<section id="my-mizan" class="my-mizan"><div class="my-mizan-head"><p class="eyebrow">Company regulatory profile</p><h2>Tell Mizan what your organisation does.</h2><p>Save regulatory attributes once. Mizan uses structured rules—not an LLM guess—to assess each verified change against this profile.</p></div><div class="profile-layout"><form id="company-profile-form" class="profile-form"><label for="company-name">Organisation name (optional)</label><input id="company-name" type="text" autocomplete="organization" placeholder="e.g. Example Bank UAE"><fieldset class="profile-fieldset"><legend>Jurisdiction</legend><div class="profile-options"><label><input type="checkbox" name="jurisdictions" value="DIFC">DIFC</label><label><input type="checkbox" name="jurisdictions" value="ADGM">ADGM</label><label><input type="checkbox" name="jurisdictions" value="Federal">Federal / Mainland</label></div></fieldset><fieldset class="profile-fieldset"><legend>Regulator</legend><div class="profile-options"><label><input type="checkbox" name="regulators" value="DFSA">DFSA</label><label><input type="checkbox" name="regulators" value="FSRA">FSRA</label><label><input type="checkbox" name="regulators" value="CBUAE">CBUAE</label><label><input type="checkbox" name="regulators" value="CMA UAE">CMA UAE</label></div></fieldset><fieldset class="profile-fieldset"><legend>Entity / activity</legend><div class="profile-options"><label><input type="checkbox" name="entityTypes" value="Authorised Firm">Authorised Firm</label><label><input type="checkbox" name="entityTypes" value="Bank">Bank</label><label><input type="checkbox" name="entityTypes" value="Finance Company">Finance Company</label><label><input type="checkbox" name="activities" value="Financial Services">Financial Services</label><label><input type="checkbox" name="activities" value="Insurance">Insurance</label></div></fieldset><fieldset class="profile-fieldset"><legend>Customer types</legend><div class="profile-options"><label><input type="checkbox" name="customers" value="Individuals">Individuals</label><label><input type="checkbox" name="customers" value="Corporate">Corporate</label><label><input type="checkbox" name="customers" value="SME">SME</label></div></fieldset><fieldset class="profile-fieldset"><legend>Compliance domains</legend><div class="profile-options"><label><input type="checkbox" name="domains" value="AML / KYC">AML / KYC</label><label><input type="checkbox" name="domains" value="Conduct">Conduct</label><label><input type="checkbox" name="domains" value="Prudential">Prudential</label><label><input type="checkbox" name="domains" value="Operational Risk">Operational Risk</label><label><input type="checkbox" name="domains" value="Insurance">Insurance</label></div></fieldset><div class="profile-actions"><button type="submit">Save profile & view inbox</button><button type="button" id="clear-profile">Clear</button></div></form><aside><div id="profile-summary" class="profile-summary"></div><p class="profile-privacy">This static version stores the profile locally in your browser. The applicability engine uses explicit profile attributes and structured matching rules. It does not treat an AI-generated inference as a legal applicability determination.</p></aside></div></section>
+<section id="change-monitor" class="change-monitor"><div class="change-monitor-head"><div><p class="eyebrow">Regulatory change intelligence</p><h2>Show me exactly what changed.</h2><p class="change-intro">Mizan does not merely report that a regulation changed. A verified change traces the exact provision from its previous state to its current state, then connects that delta to applicability, compliance impact, action and official evidence.</p></div><div class="change-summary"><strong id="change-monitor-count">0 verified provision-level changes</strong><label for="change-jurisdiction">Jurisdiction</label><select id="change-jurisdiction"><option>All</option><option>DIFC</option><option>Federal</option><option>Mainland</option><option>ADGM</option></select></div></div><div class="change-pipeline" aria-label="Change intelligence workflow"><span>Change detected</span><b>→</b><span>Exact provision changed</span><b>→</b><span>Before / after</span><b>→</b><span>Applicability</span><b>→</b><span>Compliance impact</span><b>→</b><span>Action</span><b>→</b><span>Evidence</span></div><div class="change-method-note"><b>Evidence rule:</b> Mizan only shows a provision-level delta as <strong>Verified change</strong> when an official amendment source supports the old/new alignment. Anything less stays <strong>Review required</strong>.</div><div id="change-monitor-list"></div></section>
+<section id="results" class="results" hidden><div class="results-head"><div><p class="eyebrow">Research brief</p><h2 id="results-title"></h2><p id="results-count"></p></div><div class="controls"><label for="jurisdiction">Jurisdiction</label><select id="jurisdiction"><option>All</option><option>Federal</option><option>Mainland</option><option>DIFC</option><option>ADGM</option></select><button id="copy" type="button">Copy brief</button></div></div><div id="research-answer"></div><div id="evidence-heading" class="evidence-heading" hidden><p class="eyebrow">05 / Evidence</p><h3>Sources and detailed research</h3><p>Search matches, not a list of obligations. Open each entry to check its scope.</p></div><div id="result-list"></div><aside class="notice"><b>Currency note</b> UAE legislation and regulatory rulebooks change frequently. Confirm the latest consolidated text, effective date, amendments and any implementing decisions through the linked official source before relying on a result.</aside></section>
+</main><footer><div><b>Mizan</b><p>Source-based UAE regulatory intelligence. Confirm applicability and the latest official text before making a compliance decision.</p></div><a href="https://uaelegislation.gov.ae/en/legislations" target="_blank" rel="noreferrer">UAE Legislation ↗</a></footer>
+<script src="app.js?v=20260912-personal"></script><script src="content-2026.js?v=20260912-personal"></script><script src="content-details.js?v=20260912-personal"></script><script src="content-upgrade-aug2026.js?v=20260912-personal"></script><script src="content-step2-ubo-esr.js?v=20260912-personal"></script><script src="content-step3-corporate-tax.js?v=20260912-personal"></script><script src="content-step4-vat.js?v=20260912-personal"></script><script src="content-step5-consumer-digital.js?v=20260912-personal"></script><script src="content-update-sep2026.js?v=20260912-personal"></script><script src="content-update-20260910.js?v=20260912-personal"></script><script src="content-update-20260911.js?v=20260912-personal"></script><script src="content-update-20260912.js?v=20260912-personal"></script><script src="https://unpkg.com/flexsearch@0.8.212/dist/flexsearch.bundle.min.js"></script><script src="content-cma.js?v=20260912-personal"></script><script src="flexsearch-runtime.js?v=20260912-personal"></script><script src="results-runtime.js?v=20260912-personal"></script><script src="deep-link-runtime.js?v=20260912-personal"></script><script src="ux-runtime.js?v=20260912-personal"></script><script src="change-data.js?v=20260912-personal"></script><script src="change-monitor.js?v=20260912-personal"></script><script src="profile-applicability.js?v=20260912-personal"></script><script src="daily-inbox.js?v=20260912-personal"></script></body></html>
