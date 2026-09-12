@@ -3,13 +3,14 @@
 A zero-build, GitHub Pages-ready edition of Mizan.
 
 The legal index includes federal UAE legislation, DIFC/DFSA materials and
-ADGM/FSRA materials. Regulatory sources were last reviewed on 11 September 2026.
+ADGM/FSRA materials. Regulatory sources were last reviewed on 12 September 2026.
 The September 2026 refresh adds the current federal AML/CFT/CPF framework,
 the current federal Central Bank framework, 2026 DFSA rulebook amendments,
 ADGM/FSRA AML, insurance and climate-risk updates, the ADGM virtual-asset staking
-and fiat-referenced-token frameworks, and upcoming CBUAE SME customer-protection
-and operational-risk regulations. Future-dated rules are explicitly identified
-and must not be treated as currently operative before their effective date.
+and fiat-referenced-token frameworks, upcoming CBUAE SME customer-protection and
+operational-risk regulations, and the current CBUAE insurance-company licensing,
+remuneration and Takaful framework. Future-dated rules and standards are explicitly
+identified and must not be treated as currently operative before their effective date.
 
 Searching `beneficial owner` returns the cross-regulatory framework, including
 federal corporate-transparency and AML legislation, CBUAE guidance, DFSA and
