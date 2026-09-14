@@ -1,4 +1,4 @@
-// Mizan legal/regulatory database refresh — reviewed 12 September 2026.
+// Mizan legal/regulatory database refresh — reviewed 14 September 2026.
 // Supplemental primary-source layer for verified CBUAE insurance and Takaful framework changes.
 // Future-dated instruments are explicitly marked and must not be treated as operative before their effective date.
 
@@ -32,12 +32,12 @@ laws.push(
     title:"Regulation Regarding Takaful Insurance",
     jurisdiction:"Federal",
     authority:"Central Bank of the UAE",
-    status:"Made — effective 14 Sep 2026",
+    status:"In force — effective 14 Sep 2026",
     summary:"Establishes the current CBUAE framework for Takaful insurance business, including Shari’ah governance, Takaful Insurance Funds, operational models, Takaful windows, account segregation, surplus, Qard Hasan, re-takaful, solvency, disclosures and enforcement.",
-    relevance:"Material for UAE-incorporated and foreign Takaful insurance companies and insurance companies operating Takaful windows. The Regulation changes the governing framework and supersedes the 2022 Takaful Insurance Regulation when effective.",
+    relevance:"Material for UAE-incorporated and foreign Takaful insurance companies and insurance companies operating Takaful windows. This is now the operative CBUAE Takaful framework and supersedes the 2022 Takaful Insurance Regulation.",
     topics:"cbuae central bank takaful insurance sharia shari'ah governance takaful fund wakala qard hasan retakaful re-takaful insurance window surplus solvency disclosure",
     source:"https://rulebook.centralbank.ae/en/node/7178",
-    note:"Effective 14 September 2026. As of 12 September 2026 this Regulation is future-dated and must not be treated as operative. Article 28.1 states that it cancels and supersedes the Regulation Regarding Takaful Insurance issued in 2022."
+    note:"Effective 14 September 2026 and now operative. Article 28.1 states that it cancels and supersedes the Regulation Regarding Takaful Insurance issued in 2022."
   },
   {
     number:"CBUAE — Takaful Operational Model Standard (2027)",
@@ -49,7 +49,7 @@ laws.push(
     relevance:"Material for all UAE Takaful insurers, foreign Takaful branches and insurers with Takaful windows because it requires a documented and approved operating model and supporting policies and procedures.",
     topics:"cbuae central bank takaful operational model wakala takaful fund fund charter underwriting investment retakaful claims surplus qard hasan sharia",
     source:"https://rulebook.centralbank.ae/en/rulebook/standard-re-operational-model-takaful-insurance",
-    note:"Effective 15 July 2027. As of 12 September 2026 this Standard is future-dated and must not be treated as operative. The official Rulebook states that companies must prepare a compliance plan within 180 days from issuance and fully comply within one year from issuance."
+    note:"Effective 15 July 2027. As of 14 September 2026 this Standard is future-dated and must not be treated as operative. The official Rulebook states that companies must prepare a compliance plan within 180 days from issuance and fully comply within one year from issuance."
   },
   {
     number:"CBUAE — Wakala Standard for Takaful Insurance (2027)",
@@ -61,7 +61,7 @@ laws.push(
     relevance:"Material for Takaful insurers and relevant Shari’ah governance functions because the 2026 Takaful framework requires Wakala-based operating arrangements and supporting standards issued by the CBUAE and Higher Shari’ah Authority.",
     topics:"cbuae central bank takaful wakala agency sharia shari'ah procedural requirements takaful insurance higher sharia authority hsa",
     source:"https://rulebook.centralbank.ae/en/rulebook/standard-shari%E2%80%99ah-and-procedural-requirements-agency-wakala-takaful-insurance",
-    note:"Effective 15 July 2027. As of 12 September 2026 this Standard is future-dated and must not be treated as operative. The English Rulebook page currently directs users to the Arabic version for the substantive text; no English-language obligations are inferred in this record."
+    note:"Effective 15 July 2027. As of 14 September 2026 this Standard is future-dated and must not be treated as operative. The English Rulebook page currently directs users to the Arabic version for the substantive text; no English-language obligations are inferred in this record."
   },
   {
     number:"CBUAE — Takaful Insurance Fund Establishment Standard (2027)",
@@ -73,6 +73,6 @@ laws.push(
     relevance:"Material for incorporated and foreign Takaful insurers and insurers with Takaful windows because it governs establishment, registration, Fund Charters, governance and separation of Takaful Insurance Funds.",
     topics:"cbuae central bank takaful insurance fund establishment controls procedures fund charter legal personality registration board trustees sharia governance",
     source:"https://rulebook.centralbank.ae/en/entiresection/7242",
-    note:"Effective 15 July 2027. As of 12 September 2026 this Standard is future-dated and must not be treated as operative. The official Rulebook requires each Fund to have independent legal personality and financial liability distinct from the Company and to be registered with the CBUAE."
+    note:"Effective 15 July 2027. As of 14 September 2026 this Standard is future-dated and must not be treated as operative. The official Rulebook requires each Fund to have independent legal personality and financial liability distinct from the Company and to be registered with the CBUAE."
   }
 );
