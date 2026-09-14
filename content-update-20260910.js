@@ -1,4 +1,4 @@
-// Mizan legal/regulatory database refresh — reviewed 13 September 2026.
+// Mizan legal/regulatory database refresh — reviewed 14 September 2026.
 // Supplemental primary-source layer for verified CBUAE regulatory changes.
 // Future-dated instruments are deliberately marked as not yet operative.
 
@@ -20,11 +20,11 @@ laws.push(
     title:"Operational Risk Management Regulation",
     jurisdiction:"Federal",
     authority:"Central Bank of the UAE",
-    status:"Made — effective 14 Sep 2026",
+    status:"In force — effective 14 Sep 2026",
     summary:"Sets minimum requirements for Licensed Financial Institutions to manage operational risk and operational resilience, including governance, internal controls, incident management, business continuity, critical operations, third-party risk and supervisory enforcement.",
-    relevance:"Material for Licensed Financial Institutions that are juridical persons because it introduces the current CBUAE framework for operational risk and resilience and replaces the 2018 Operational Risk Regulation and Standards when effective.",
+    relevance:"Material for all Licensed Financial Institutions that are juridical persons. This is now the operative CBUAE framework for operational risk and operational resilience and it replaces the 2018 Operational Risk Regulation and Standards.",
     topics:"cbuae central bank operational risk operational resilience bank licensed financial institution lfi incident management business continuity disaster recovery third party outsourcing internal controls critical operations governance",
     source:"https://rulebook.centralbank.ae/en/entiresection/7278",
-    note:"Effective 14 September 2026. As of 13 September 2026 this Regulation is future-dated and must not be treated as operative. Article 19 states that it cancels and replaces Circular No. 163/2018, the Operational Risk Regulation and Operational Risk Standards, on effectiveness."
+    note:"Effective 14 September 2026 and now operative. Article 19 cancels and replaces Circular No. 163/2018, the Operational Risk Regulation and Operational Risk Standards."
   }
 );
